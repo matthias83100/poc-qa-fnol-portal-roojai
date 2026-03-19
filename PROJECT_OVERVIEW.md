@@ -54,6 +54,11 @@ python manage.py runserver
 ```
 This will generate mock data for the database (updated to the date of the day you run the command) and run the development server.
 
+To access the dashboard, go to http://127.0.0.1:8000/ and use the following credentials:
+Username: [topmanager]
+Password: [password123]
+(-> We created this in the generate mock data command)
+
 If you need to change anything regarding the charts, look into `qa_dashboard/charts/*.py`. If you need to modify the UI, simply edit the HTML/CSS in `qa_dashboard/templates/` and `qa_dashboard/static/`.
 
 *We are ready to scale when needed.*
