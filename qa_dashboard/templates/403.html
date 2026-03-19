@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Access Denied | Roojai FNOL QA{% endblock %}
+
+{% block content %}
+<div class="glass-header" style="justify-content: center; text-align: center;">
+    <h1 style="color: var(--primary); margin: 0;">Access Restricted</h1>
+</div>
+
+<div class="glass-card" style="max-width: 600px; margin: 4rem auto; text-align: center; padding: 4rem 2rem;">
+    <div style="font-size: 5rem; margin-bottom: 2rem;">🚫</div>
+    <h2 style="color: var(--secondary); margin-bottom: 1rem;">Oops! You don't have permission.</h2>
+    <p style="color: #64748B; font-size: 1.1rem; margin-bottom: 3rem; line-height: 1.6;">
+        {{ error_message|default:"It looks like you've tried to access a section of the dashboard that is restricted to higher management levels." }}
+        <br><br>
+        If you believe this is an error, please contact your system administrator.
+    </p>
+    
+    <div style="display: flex; gap: 1rem; justify-content: center;">
+        <a href="javascript:history.back()" class="glass-header" style="background: rgba(30, 41, 59, 0.05); padding: 0.8rem 2rem; border-radius: 10px; text-decoration: none; color: var(--secondary); font-weight: 600;">
+            ← Go Back
+        </a>
+        <a href="{% url 'overview' %}" class="glass-header" style="background: var(--primary); padding: 0.8rem 2rem; border-radius: 10px; text-decoration: none; color: white; font-weight: 600;">
+            Return to Dashboard
+        </a>
+    </div>
+</div>
+
+<style>
+    /* Ensure the error page feels centered and premium */
+    .glass-card {
+        animation: slideUp 0.6s ease-out;
+    }
+</style>
+{% endblock %}

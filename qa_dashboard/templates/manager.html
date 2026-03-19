@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Management Control" %}{% endblock %}
+
+{% block header_controls %}
+<div class="d-flex align-items-center bg-white p-2 rounded-pill shadow-sm border">
+    <i class="bi bi-search text-muted ms-2 me-2"></i>
+    <input type="text" id="sidebarSearch" class="form-control form-control-sm border-0 bg-transparent ps-0" placeholder="{% trans 'Search managers...' %}" style="width: 250px;">
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="glass-header mb-4 py-2 px-4 shadow-sm">
+    <p class="text-muted mb-0"><i class="bi bi-shield-lock me-2"></i> {% trans "Elevated privileges confirmed. Browsing team management dashboards." %}</p>
+</div>
+
+<div class="row g-4">
+    {% for manager in managers %}
+    <div class="col-md-4">
+        <div class="card-premium h-100 border-top border-4 border-primary" data-search-term="{{ manager.username }}">
+            <div class="d-flex align-items-center mb-4">
+                <div class="bg-primary-subtle rounded-3 p-3 me-3">
+                    <i class="bi bi-person-badge text-primary fs-3"></i>
+                </div>
+                <div>
+                    <h5 class="fw-bold mb-0">{{ manager.username|title }}</h5>
+                    <span class="text-muted small">{% trans "Squad Lead" %}</span>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="small text-muted">{% trans "Team Size" %}</span>
+                    <span class="fw-bold">{{ manager.team_members.count }} {% trans "Agents" %}</span>
+                </div>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-primary" style="width: 75%"></div>
+                </div>
+                <small class="text-muted mt-1 d-block" style="font-size: 0.7rem;">{% trans "75% QA Completion Goal" %}</small>
+            </div>
+            
+            <a href="{% url 'manager_detail' manager.id %}" class="btn btn-outline-premium w-100">{% trans "Review Squad Performance" %}</a>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <div class="card-premium d-inline-block px-5">
+            <h5>{% trans "No management data" %}</h5>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

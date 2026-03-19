@@ -1,0 +1,240 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-13 15:00+0000\n"
+"PO-Revision-Date: 2026-03-18 11:00+0700\n"
+"Last-Translator: Antigravity\n"
+"Language-Team: th\n"
+"Language: th\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Overview"
+msgstr "ภาพรวม"
+
+msgid "Management"
+msgstr "การจัดการ"
+
+msgid "Agents"
+msgstr "เจ้าหน้าที่"
+
+msgid "Cost & Performances"
+msgstr "ต้นทุนและประสิทธิภาพ"
+
+msgid "Logout"
+msgstr "ออกจากระบบ"
+
+msgid "Real-time monitoring"
+msgstr "การตรวจสอบแบบเรียลไทม์"
+
+msgid "MAIN NAVIGATION"
+msgstr "การนำทางหลัก"
+
+msgid "SYSTEM"
+msgstr "ระบบ"
+
+msgid "Roojai FNOL QA"
+msgstr "Roojai FNOL QA"
+
+msgid "Operational Insights"
+msgstr "ข้อมูลเชิงปฏิบัติการ"
+
+msgid "Total Calls"
+msgstr "จำนวนสายทั้งหมด"
+
+msgid "vs last week"
+msgstr "เทียบกับสัปดาห์ที่แล้ว"
+
+msgid "Avg QA Score"
+msgstr "คะแนน QA เฉลี่ย"
+
+msgid "Target"
+msgstr "เป้าหมาย"
+
+msgid "Active Agents"
+msgstr "เจ้าหน้าที่ที่ปฏิบัติงาน"
+
+msgid "squads"
+msgstr "ทีม"
+
+msgid "Main Customer Emotion"
+msgstr "อารมณ์หลักของลูกค้า"
+
+msgid "of total interaction"
+msgstr "ของการโต้ตอบทั้งหมด"
+
+msgid "QA Scoring Trend"
+msgstr "แนวโน้มคะแนน QA"
+
+msgid "Category Performance"
+msgstr "ประสิทธิภาพตามหมวดหมู่"
+
+msgid "No data for this period"
+msgstr "ไม่มีข้อมูลสำหรับช่วงเวลานี้"
+
+msgid "Try adjusted the date filter above to see more results."
+msgstr "ลองปรับตัวกรองวันที่ด้านบนเพื่อดูผลลัพธ์เพิ่มเติม"
+
+msgid "Reset Filters"
+msgstr "รีเซ็ตตัวกรอง"
+
+msgid "Real-time Monitoring"
+msgstr "การตรวจสอบแบบเรียลไทม์"
+
+msgid "Search agents by name..."
+msgstr "ค้นหาเจ้าหน้าที่ด้วยชื่อ..."
+
+msgid "Authorized access verified. Displaying agents within your organizational scope."
+msgstr "ยืนยันการเข้าถึงที่ได้รับอนุญาตแล้ว กำลังแสดงเจ้าหน้าที่ภายใต้ขอบเขตองค์กรของคุณ"
+
+msgid "Manager"
+msgstr "ผู้จัดการ"
+
+msgid "Global"
+msgstr "ทั่วไป"
+
+msgid "CALLS TODAY"
+msgstr "สายวันนี้"
+
+msgid "AVG SCORE"
+msgstr "คะแนนเฉลี่ย"
+
+msgid "Open Analytics"
+msgstr "เปิดการวิเคราะห์"
+
+msgid "No agents found"
+msgstr "ไม่พบเจ้าหน้าที่"
+
+msgid "You don't have permission to view any agents in this category."
+msgstr "คุณไม่มีสิทธิ์ดูเจ้าหน้าที่ในหมวดหมู่นี้"
+
+msgid "Agent Profile"
+msgstr "โปรไฟล์เจ้าหน้าที่"
+
+msgid "Agent KPIs"
+msgstr "KPI ของเจ้าหน้าที่"
+
+msgid "Lifetime QA Score"
+msgstr "คะแนน QA ตลอดอายุการทำงาน"
+
+msgid "QA Score Progression"
+msgstr "ความก้าวหน้าของคะแนน QA"
+
+msgid "Speaker Distribution"
+msgstr "การกระจายตัวของผู้พูด"
+
+msgid "Language Usage"
+msgstr "การใช้ภาษา"
+
+msgid "Emotion Analysis"
+msgstr "การวิเคราะห์อารมณ์"
+
+msgid "Call History & Detailed QA"
+msgstr "ประวัติสายและรายละเอียด QA"
+
+msgid "Transcript"
+msgstr "ถอดความ"
+
+msgid "QA Evaluation"
+msgstr "การประเมินผล QA"
+
+msgid "Confidential Financial Data"
+msgstr "ข้อมูลทางการเงินที่เป็นความลับ"
+
+msgid "This dashboard contains real-time billing information for the Gemini API. Do not share externally."
+msgstr "แดชบอร์ดนี้มีข้อมูลการเรียกเก็บเงินตามเวลาจริงสำหรับ Gemini API ห้ามแชร์ภายนอก"
+
+msgid "Total Monthly Cost"
+msgstr "ต้นทุนรวมรายเดือน"
+
+msgid "Within Budget"
+msgstr "อยู่ในงบประมาณ"
+
+msgid "API Expenditure Trend (THB)"
+msgstr "แนวโน้มการใช้จ่าย API (บาท)"
+
+msgid "No financial data found"
+msgstr "ไม่พบข้อมูลทางการเงิน"
+
+msgid "There were no API executions recorded for this specific date range."
+msgstr "ไม่มีการบันทึกการทำงานของ API สำหรับช่วงวันที่ที่ระบุนี้"
+
+msgid "API Execution Logs"
+msgstr "บันทึกการทำงานของ API"
+
+msgid "Job Execution"
+msgstr "การทำงานของงาน"
+
+msgid "Source ID"
+msgstr "ไอดีต้นทาง"
+
+msgid "Process Time"
+msgstr "เวลาดำเนินการ"
+
+msgid "Token Density"
+msgstr "ความหนาแน่นของทอล์กเกน"
+
+msgid "Cost (THB)"
+msgstr "ต้นทุน (บาท)"
+
+msgid "No data available."
+msgstr "ไม่มีข้อมูล"
+
+msgid "Management Control"
+msgstr "การควบคุมการจัดการ"
+
+msgid "Search managers..."
+msgstr "ค้นหาผู้จัดการ..."
+
+msgid "Elevated privileges confirmed. Browsing team management dashboards."
+msgstr "ยืนยันสิทธิ์ขั้นสูงแล้ว กำลังเรียกดูแดชบอร์ดการจัดการทีม"
+
+msgid "Squad Lead"
+msgstr "หัวหน้าทีม"
+
+msgid "Team Size"
+msgstr "ขนาดทีม"
+
+msgid "75% QA Completion Goal"
+msgstr "เป้าหมายการดำเนินการ QA 75%"
+
+msgid "Review Squad Performance"
+msgstr "ตรวจสอบประสิทธิภาพของทีม"
+
+msgid "No management data"
+msgstr "ไม่มีข้อมูลการจัดการ"
+
+msgid "Team Dashboard"
+msgstr "แดชบอร์ดทีม"
+
+msgid "Squad Summary"
+msgstr "สรุปข้อมูลทีม"
+
+msgid "Team average is 8% above center baseline."
+msgstr "ค่าเฉลี่ยของทีมสูงกว่าเกณฑ์มาตรฐานกลาง 8%"
+
+msgid "Agent Performance Comparison (%)"
+msgstr "การเปรียบเทียบประสิทธิภาพของเจ้าหน้าที่ (%)"
+
+msgid "Team Roster"
+msgstr "รายชื่อทีม"
+
+msgid "calls evaluated"
+msgstr "สายที่ประเมินแล้ว"
+
+msgid "View Insights"
+msgstr "ดูข้อมูลเชิงลึก"
+
+msgid "Quick Search"
+msgstr "ค้นหาด่วน"
+
+msgid "Search"
+msgstr "ค้นหา"
+
+msgid "Yes"
+msgstr "ใช่"
+
+msgid "No"
+msgstr "ไม่ใช่"

@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Agent Profile" %}: {{ agent.username|title }}{% endblock %}
+
+{% block content %}
+<style>
+    .transcript-container { 
+        max-height: 500px; 
+        overflow-y: auto; 
+        background: #F8FAFC; 
+        border-radius: 15px; 
+        padding: 1.5rem;
+    }
+    .utterance {
+        margin-bottom: 1rem;
+        padding: 1rem;
+        border-radius: 12px;
+        border-left: 5px solid #CBD5E1;
+        background: white;
+        transition: transform 0.2s ease;
+    }
+    .utterance:hover { transform: scale(1.01); }
+    .utterance.agent { border-left-color: var(--primary); }
+    .utterance.customer { border-left-color: var(--success); }
+    
+    .qa-box { background: white; border-radius: 15px; padding: 1rem; margin-bottom: 1rem; border: 1px solid #E2E8F0; }
+    .qa-q { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
+    .qa-ans { font-weight: 800; font-size: 0.8rem; text-transform: uppercase; }
+</style>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card-premium text-center">
+            <h5 class="fw-bold mb-3">{% trans "Agent KPIs" %}</h5>
+            <div class="mb-4">
+                <span class="stats-label d-block mb-1">{% trans "Lifetime QA Score" %}</span>
+                <p class="stats-value text-primary">{{ lifetime_avg_score }}%</p>
+            </div>
+            <div class="d-flex justify-content-between small px-3">
+                <span class="text-muted">{% trans "Total Calls" %}</span>
+                <span class="fw-bold text-dark">{{ lifetime_total_calls }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card-premium">
+            <h5 class="fw-bold mb-4">{% trans "QA Score Progression" %}</h5>
+            <div id="qaTrendChart" style="height: 200px;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card-premium">
+            <h5 class="fw-bold mb-3">{% trans "Speaker Distribution" %}</h5>
+            <div id="speakerPie" style="height: 250px;"></div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card-premium">
+            <h5 class="fw-bold mb-3">{% trans "Language Usage" %}</h5>
+            <div id="langBar" style="height: 250px;"></div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card-premium">
+            <h5 class="fw-bold mb-3">{% trans "Emotion Analysis" %}</h5>
+            <div id="emotionBar" style="height: 250px;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="glass-header mb-4">
+    <h5 class="fw-bold mb-0">{% trans "Call History & Detailed QA" %}</h5>
+</div>
+
+<div class="accordion" id="callAccordion">
+    {% for call in calls %}
+    <div class="accordion-item border-0 mb-3 shadow-sm rounded-4 overflow-hidden">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed fw-bold d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ call.id }}">
+                <span class="me-auto">{{ call.filename }}</span>
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle me-3">QA: {{ call.overall_qa_score|floatformat:1 }}%</span>
+                <span class="text-muted small fw-normal">{{ call.date_processed|date:"M d, Y" }}</span>
+            </button>
+        </h2>
+        <div id="collapse{{ call.id }}" class="accordion-collapse collapse" data-bs-parent="#callAccordion">
+            <div class="accordion-body bg-light-subtle">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h6 class="fw-bold mb-3 ms-2"><i class="bi bi-chat-left-text me-2 text-primary"></i>{% trans "Transcript" %}</h6>
+                        <div class="transcript-container">
+                            {% for u in call.transcript.all %}
+                            <div class="utterance {% if u.speaker == 'AGENT' %}agent{% else %}customer{% endif %}">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="fw-bold small {% if u.speaker == 'AGENT' %}text-primary{% else %}text-success{% endif %}">{{ u.speaker }}</span>
+                                    <span class="text-muted" style="font-size: 0.7rem;">{{ u.timestamp }}</span>
+                                </div>
+                                <p class="mb-1">{{ u.text }}</p>
+                                <div class="mt-2">
+                                    <span class="badge rounded-pill bg-light text-dark border small" style="font-size: 0.65rem;">{{ u.emotion|title }}</span>
+                                    <span class="badge rounded-pill bg-secondary-subtle text-secondary border border-secondary-subtle small" style="font-size: 0.65rem;">{{ u.language|title }}</span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <h6 class="fw-bold mb-3 ms-2"><i class="bi bi-clipboard2-check me-2 text-primary"></i>{% trans "QA Evaluation" %}</h6>
+                        <div style="max-height: 500px; overflow-y: auto; padding-right: 5px;">
+                            {% for cat in call.qa_categories.all %}
+                            <div class="mb-4">
+                                <p class="small text-muted fw-bold text-uppercase border-bottom pb-1 ms-2">{{ cat.category_name }}</p>
+                                {% for q in cat.questions.all %}
+                                <div class="qa-box">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div class="qa-q pe-2">{{ q.question }}</div>
+                                        <span class="qa-ans {% if q.answer == 'Yes' %}text-success{% elif q.answer == 'No' %}text-danger{% else %}text-muted{% endif %}">
+                                            {% if q.answer == 'Yes' %}{% trans "Yes" %}{% elif q.answer == 'No' %}{% trans "No" %}{% else %}{{ q.answer }}{% endif %}
+                                        </span>
+                                    </div>
+                                    <p class="small text-muted mb-1">{{ q.explanation }}</p>
+                                    {% if q.evidence != 'N/A' %}
+                                    <div class="bg-light p-2 rounded small mt-2 border" style="font-size: 0.75rem;">
+                                        <i class="bi bi-search me-1"></i> {{ q.evidence }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    const qaConfig = {{ qa_progression_json|safe }};
+    Plotly.newPlot('qaTrendChart', qaConfig.data, qaConfig.layout, {displayModeBar: false, responsive: true});
+
+    const speakerConfig = {{ speaker_dist_json|safe }};
+    Plotly.newPlot('speakerPie', speakerConfig.data, speakerConfig.layout, {displayModeBar: false, responsive: true});
+
+    const langConfig = {{ lang_usage_json|safe }};
+    Plotly.newPlot('langBar', langConfig.data, langConfig.layout, {displayModeBar: false, responsive: true});
+
+    const emotionConfig = {{ emotion_analysis_json|safe }};
+    Plotly.newPlot('emotionBar', emotionConfig.data, emotionConfig.layout, {displayModeBar: false, responsive: true});
+</script>
+{% endblock %}

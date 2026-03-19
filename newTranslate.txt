@@ -1,0 +1,27 @@
+python -c "import polib; polib.pofile('locale/th/LC_MESSAGES/django.po').save_as_mofile('locale/th/LC_MESSAGES/django.mo')"
+Here is your exact workflow whenever you want to add a new translation:
+
+1. Mark the text in your HTML file Wrap the text you want to translate with the translation tag.
+
+html
+{% trans "My New Text" %}
+2. Add it to your 
+
+django.po
+ file Open 
+
+locale/th/LC_MESSAGES/django.po
+ and add a new block at the very bottom:
+
+po
+msgid "My New Text"
+msgstr "ข้อความใหม่ของฉัน"
+(Make sure the msgid matches exactly what you put in the {% trans %} tag, including capitalization and punctuation).
+
+3. Compile the file into django.mo Because we are bypassing standard Django commands, write this command in your terminal inside the FNOL_QA_Django folder to quickly compile it with polib:
+
+bash
+python -c "import polib; polib.pofile('locale/th/LC_MESSAGES/django.po').save_as_mofile('locale/th/LC_MESSAGES/django.mo')"
+4. Restart your Server Since Django caches translations in memory, remember to kill your server (Ctrl + C) and start it again (python manage.py runserver).
+
+If you ever decide to install gettext (choco install gettext), you can start using Django's built-in python manage.py makemessages -l th and python manage.py compilemessages, which automates steps 2 and 3 by scanning all your HTML files for new {% trans %} tags automatically!

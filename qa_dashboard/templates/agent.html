@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Real-time Monitoring" %}{% endblock %}
+
+{% block header_controls %}
+<div class="d-flex align-items-center bg-white p-2 rounded-pill shadow-sm border">
+    <i class="bi bi-search text-muted ms-2 me-2"></i>
+    <input type="text" id="sidebarSearch" class="form-control form-control-sm border-0 bg-transparent ps-0"
+        placeholder="{% trans 'Search agents by name...' %}" style="width: 250px;">
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="glass-header mb-4 py-2 px-4 shadow-sm">
+    <p class="text-muted mb-0"><i class="bi bi-info-circle me-2"></i> {% trans "Authorized access verified. Displaying agents within your organizational scope." %}</p>
+</div>
+
+<div class="row g-4">
+    {% for agent in agents %}
+    <div class="col-md-3">
+        <div class="card-premium h-100 d-flex flex-column align-items-center text-center"
+            data-search-term="{{ agent.username }}">
+            <div class="position-relative mb-4">
+                <div class="bg-secondary-subtle rounded-circle d-flex align-items-center justify-content-center"
+                    style="width: 80px; height: 80px; border: 3px solid white; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <i class="bi bi-person text-secondary fs-1"></i>
+                </div>
+                <div class="position-absolute bottom-0 end-0 bg-success border border-white rounded-circle"
+                    style="width: 15px; height: 15px;"></div>
+            </div>
+
+            <h5 class="fw-bold text-dark mb-1">{{ agent.username|title }}</h5>
+            <span class="text-muted small mb-3">{% trans "Manager" %}: {{ agent.manager.username|default:_("Global")|title }}</span>
+
+            <div class="w-100 bg-light-subtle rounded-3 p-2 mb-3">
+                <div class="row g-0">
+                    <div class="col-6 border-end">
+                        <small class="d-block text-muted" style="font-size: 0.65rem;">{% trans "CALLS TODAY" %}</small>
+                        <span class="fw-bold">{{ agent.today_calls_count }}</span>
+                    </div>
+                    <div class="col-6">
+                        <small class="d-block text-muted" style="font-size: 0.65rem;">{% trans "AVG SCORE" %}</small>
+                        <span class="fw-bold text-primary">{{ agent.today_avg_score|default:0|floatformat:1 }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <a href="{% url 'agent_detail' agent.id %}" class="btn btn-premium w-100 mt-auto">{% trans "Open Analytics" %}</a>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <div class="card-premium d-inline-block px-5">
+            <i class="bi bi-search fs-1 text-muted mb-3 d-block"></i>
+            <h5>{% trans "No agents found" %}</h5>
+            <p class="text-muted">{% trans "You don't have permission to view any agents in this category." %}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

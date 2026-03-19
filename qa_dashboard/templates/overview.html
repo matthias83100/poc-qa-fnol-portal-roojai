@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Operational Insights" %}{% endblock %}
+
+{% block content %}
+{% if total_calls > 0 %}
+<div class="row g-4 mb-5">
+    <div class="col-md-3">
+        <div class="stats-card">
+            <span class="stats-label">{% trans "Total Calls" %}</span>
+            <p class="stats-value">{{ total_calls }}</p>
+            <small class="text-success"><i class="bi bi-arrow-up"></i> 12% {% trans "vs last week" %}</small>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card">
+            <span class="stats-label">{% trans "Avg QA Score" %}</span>
+            <p class="stats-value text-primary">{{ avg_score }}%</p>
+            <small class="text-muted">{% trans "Target" %}: 85%</small>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card">
+            <span class="stats-label">{% trans "Active Agents" %}</span>
+            <p class="stats-value">{{ agents_count }}</p>
+            <small class="text-muted">3 {% trans "squads" %}</small>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card" style="background: {{ emotion_color }}; color: white;">
+            <span class="stats-label text-white opacity-75">{% trans "Main Customer Emotion" %}</span>
+            <p class="stats-value text-white">{{ main_emotion }}</p>
+            <small class="text-white opacity-75">{{ emotion_percent }}% {% trans "of total interaction" %}</small>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-8">
+        <div class="card-premium">
+            <h5 class="fw-bold mb-4">{% trans "QA Scoring Trend" %}</h5>
+            <div id="trendChart" style="height: 350px;"></div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card-premium">
+            <h5 class="fw-bold mb-4">{% trans "Category Performance" %}</h5>
+            <div id="categoryChart" style="height: 350px;"></div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="text-center py-5">
+    <div class="card-premium d-inline-block px-5">
+        <i class="bi bi-calendar-x fs-1 text-muted mb-3 d-block"></i>
+        <h4>{% trans "No data for this period" %}</h4>
+        <p class="text-muted">{% trans "Try adjusted the date filter above to see more results." %}</p>
+        <a href="{% url 'overview' %}" class="btn btn-outline-primary btn-sm rounded-pill mt-3">{% trans "Reset Filters" %}</a>
+    </div>
+</div>
+{% endif %}
+
+<script>
+    const trendConfig = {{ trend_chart_json| safe }};
+    Plotly.newPlot('trendChart', trendConfig.data, trendConfig.layout, { displayModeBar: false, responsive: true });
+
+    const categoryConfig = {{ category_chart_json| safe }};
+    Plotly.newPlot('categoryChart', categoryConfig.data, categoryConfig.layout, { displayModeBar: false, responsive: true });
+</script>
+{% endblock %}
