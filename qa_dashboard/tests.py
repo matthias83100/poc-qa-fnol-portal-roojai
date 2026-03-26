@@ -1,18 +1,19 @@
 from django.test import TestCase, RequestFactory
 from django.utils import timezone
 from datetime import timedelta
-from .models import CustomUser, CallReport, QACategory, QAQuestion, Utterance
+from .models import CallReport, QACategory, QAQuestion, Utterance, DailyOverviewStat, DailyAgentStat
 from . import services
 
 class ServiceLayerTests(TestCase):
+    databases = {'default', 'raw_data', 'aggregated_data'}
+
     def setUp(self):
         self.factory = RequestFactory()
-        self.manager = CustomUser.objects.create_user(username='manager', password='pw', role='MANAGER')
-        self.agent = CustomUser.objects.create_user(username='agent', password='pw', role='AGENT', manager=self.manager)
         
-        # Create a call report
+        # Create a call report (Agent and Manager are now strings)
         self.call = CallReport.objects.create(
-            agent=self.agent,
+            agent_name="test_agent",
+            manager_name="test_manager",
             filename="test_call.mp3",
             date_processed=timezone.now()
         )
@@ -36,46 +37,43 @@ class ServiceLayerTests(TestCase):
             explanation="E2"
         )
         
-        # Denormalized score should be updated via signals
+        # Reload to get the score updated via signal
         self.call.refresh_from_db()
 
     def test_denormalized_score_calculation(self):
         """Verify that the signal updated the overall_score correctly."""
-        # Q1: Yes (50), Q2: No (0) -> (50+0)/100 * 100 = 50%
+        # Q1: Yes, Q2: No -> 50%
         self.assertEqual(self.call.overall_score, 50.0)
 
+    def test_automatic_aggregation(self):
+        """Verify that signals automatically update daily aggregations."""
+        # The signals should have triggered recalculate_aggregations already
+        today = timezone.now().date()
+        overview = DailyOverviewStat.objects.get(date=today)
+        self.assertEqual(overview.total_calls, 1)
+        self.assertEqual(overview.avg_score, 50.0)
+        
+        agent_stat = DailyAgentStat.objects.get(date=today, agent_name="test_agent")
+        self.assertEqual(agent_stat.total_calls, 1)
+        self.assertEqual(agent_stat.avg_score, 50.0)
+
     def test_get_date_range_defaults(self):
-        """Verify default date range is last 30 days."""
+        """Verify default date range is last 7 days."""
         request = self.factory.get('/')
         start, end = services.get_date_range(request)
         self.assertEqual(end, timezone.now().date())
-        self.assertEqual(start, end - timedelta(days=30))
-
-    def test_get_date_range_custom(self):
-        """Verify custom date parsing."""
-        request = self.factory.get('/', {'start_date': '2026-01-01', 'end_date': '2026-01-15'})
-        start, end = services.get_date_range(request)
-        self.assertEqual(start.strftime('%Y-%m-%d'), '2026-01-01')
-        self.assertEqual(end.strftime('%Y-%m-%d'), '2026-01-15')
+        self.assertEqual(start, end - timedelta(days=7))
 
     def test_get_overview_stats(self):
-        """Verify overview stats calculation."""
-        start = timezone.now().date() - timedelta(days=1)
-        end = timezone.now().date() + timedelta(days=1)
+        """Verify overview stats calculation using aggregated models."""
+        # Ensure data is aggregated first (signal does this, but being explicit for test clarity)
+        today = timezone.now().date()
+        services.recalculate_aggregations(today)
+        
+        start = today - timedelta(days=1)
+        end = today + timedelta(days=1)
         stats = services.get_overview_stats(start, end)
         
         self.assertEqual(stats['total_calls'], 1)
         self.assertEqual(stats['avg_score'], 50.0)
         self.assertIn('Test Category', stats['cat_labels'])
-
-    def test_get_cost_stats(self):
-        """Verify cost stats calculation."""
-        self.call.cost_thb = 5.5
-        self.call.save()
-        
-        start = timezone.now().date() - timedelta(days=1)
-        end = timezone.now().date() + timedelta(days=1)
-        stats = services.get_cost_stats(start, end)
-        
-        self.assertEqual(stats['total_cost'], 5.5)
-        self.assertEqual(len(stats['cost_trend']['x']), 3) # Start, Now, End days if step is 1

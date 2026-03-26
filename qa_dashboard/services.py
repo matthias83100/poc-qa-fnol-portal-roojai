@@ -30,11 +30,7 @@ def get_date_range(request):
 def get_overview_stats(start_date, end_date):
     """
     Calculate stats for the overview dashboard using aggregated models.
-    Ensures today's data is fresh by recalculating it before querying.
     """
-    today = timezone.now().date()
-    if (not start_date or start_date <= today) and (not end_date or end_date >= today):
-        recalculate_aggregations(today)
 
     stats = DailyOverviewStat.objects.filter(date__range=[start_date, end_date]).order_by('date')
     

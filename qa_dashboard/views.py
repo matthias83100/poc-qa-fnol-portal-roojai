@@ -5,7 +5,7 @@ from django.utils import timezone
 import json
 import datetime
 from django.db.models import Count, Avg
-from .models import CallReport
+from .models import CallReport, DailyAgentStat
 from . import services
 from . import charts
 
@@ -45,16 +45,16 @@ def overview_dashboard(request):
 
 
 def agent_dashboard(request):
-    # Get distinct agents from CallReports
+    """
+    List of all agents with today's summary stats pulled from DailyAgentStat.
+    """
+    # Get distinct agents from CallReports (to ensure we have the full list)
     agents_data = CallReport.objects.values('agent_name', 'manager_name').distinct()
     
-    # Get today's stats from CallReport
+    # Get today's stats from DailyAgentStat
     today = timezone.now().date()
-    today_stats_query = CallReport.objects.filter(date_processed__date=today).values('agent_name').annotate(
-        total_calls=Count('id'),
-        avg_score=Avg('overall_score')
-    )
-    today_stats = {s['agent_name']: s for s in today_stats_query}
+    today_stats = DailyAgentStat.objects.filter(date=today)
+    today_stats_map = {s.agent_name: {'total_calls': s.total_calls, 'avg_score': s.avg_score} for s in today_stats}
     
     # Structure for template compatibility
     agents = []
@@ -63,7 +63,7 @@ def agent_dashboard(request):
     active_agents_count = 0
     
     for item in agents_data:
-        stats = today_stats.get(item['agent_name'], {'total_calls': 0, 'avg_score': 0})
+        stats = today_stats_map.get(item['agent_name'], {'total_calls': 0, 'avg_score': 0})
         agent_data = {
             'username': item['agent_name'],
             'manager': {'username': item['manager_name']},
