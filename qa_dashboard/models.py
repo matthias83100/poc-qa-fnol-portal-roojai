@@ -1,6 +1,9 @@
 from django.db import models
 from django.db.models import Count, Q
 
+
+# ------- RAW DATA --------
+
 class CallReport(models.Model):
     agent_name = models.CharField(max_length=150, db_index=True)
     manager_name = models.CharField(max_length=150, db_index=True)
@@ -65,6 +68,9 @@ class QAQuestion(models.Model):
 
     def __str__(self):
         return f"Q{self.question_id}: {self.question}"
+
+# ------- AGGREGATED DATA ------
+
 
 class DailyOverviewStat(models.Model):
     date = models.DateField(unique=True, db_index=True)
