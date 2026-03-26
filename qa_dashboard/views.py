@@ -19,6 +19,11 @@ def overview_dashboard(request):
     # Python-based chart generation
     cat_chart_json = charts.get_performance_category_chart(stats['cat_labels'], stats['cat_values'])
     trend_chart_json = charts.get_qa_trend_chart(stats['trend_data'])
+    
+    # New aggregate charts
+    speaker_dist_json = charts.get_speaker_distribution(stats['speaker_labels'], stats['speaker_values'])
+    lang_usage_json = charts.get_language_usage(stats['lang_labels'], stats['lang_values'])
+    emotion_analysis_json = charts.get_emotion_analysis(stats['emotion_plot_data'])
 
     context = {
         'total_calls': stats['total_calls'],
@@ -26,6 +31,10 @@ def overview_dashboard(request):
         'avg_score': stats['avg_score'],
         'category_chart_json': cat_chart_json,
         'trend_chart_json': trend_chart_json,
+        'speaker_dist_json': speaker_dist_json,
+        'lang_usage_json': lang_usage_json,
+        'emotion_analysis_json': emotion_analysis_json,
+        'agent_list': stats['agent_list'],
         'main_emotion': stats['main_emotion'],
         'emotion_percent': stats['emotion_percent'],
         'emotion_color': stats['emotion_color'],
@@ -49,17 +58,34 @@ def agent_dashboard(request):
     
     # Structure for template compatibility
     agents = []
+    total_today_calls = 0
+    total_today_score_sum = 0
+    active_agents_count = 0
+    
     for item in agents_data:
         stats = today_stats.get(item['agent_name'], {'total_calls': 0, 'avg_score': 0})
-        agents.append({
+        agent_data = {
             'username': item['agent_name'],
             'manager': {'username': item['manager_name']},
             'name_slug': item['agent_name'], # Used for routing
             'today_calls': stats['total_calls'],
             'today_avg_score': round(stats['avg_score'], 1) if stats['avg_score'] else 0
-        })
+        }
+        agents.append(agent_data)
         
-    context = {'agents': agents}
+        if agent_data['today_calls'] > 0:
+            active_agents_count += 1
+            total_today_calls += agent_data['today_calls']
+            total_today_score_sum += (agent_data['today_avg_score'] * agent_data['today_calls'])
+            
+    avg_today_score = (total_today_score_sum / total_today_calls) if total_today_calls > 0 else 0
+    
+    context = {
+        'agents': agents,
+        'active_agents_count': active_agents_count,
+        'total_today_calls': total_today_calls,
+        'avg_today_score': round(avg_today_score, 1)
+    }
     return render(request, 'agent.html', context)
 
 

@@ -9,8 +9,8 @@ def get_performance_category_chart(cat_labels, cat_values):
         go.Bar(
             x=cat_labels,
             y=cat_values,
-            marker_color=[COLORS['success'] if v > 80 else COLORS['warning'] for v in cat_values],
-            text=[f"{v}%" for v in cat_values],
+            marker_color=[COLORS['primary'], COLORS['secondary'],COLORS['success']],
+            text=[f"{v:.0f}%" for v in cat_values],
             textposition='auto',
         )
     ])

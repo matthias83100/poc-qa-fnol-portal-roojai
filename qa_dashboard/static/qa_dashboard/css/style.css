@@ -293,3 +293,11 @@ body {
     letter-spacing: 0.5px;
     font-weight: 600;
 }
+
+.hover-primary {
+    transition: color 0.2s ease;
+}
+
+.hover-primary:hover {
+    color: var(--primary) !important;
+}

@@ -30,7 +30,12 @@ def get_date_range(request):
 def get_overview_stats(start_date, end_date):
     """
     Calculate stats for the overview dashboard using aggregated models.
+    Ensures today's data is fresh by recalculating it before querying.
     """
+    today = timezone.now().date()
+    if (not start_date or start_date <= today) and (not end_date or end_date >= today):
+        recalculate_aggregations(today)
+
     stats = DailyOverviewStat.objects.filter(date__range=[start_date, end_date]).order_by('date')
     
     total_calls = stats.aggregate(Sum('total_calls'))['total_calls__sum'] or 0
@@ -81,6 +86,70 @@ def get_overview_stats(start_date, end_date):
             emotion_percent = recent_stat.emotion_percent
             emotion_color = recent_stat.emotion_color
 
+    # Aggregate Distributions from all agents
+    agent_stats = DailyAgentStat.objects.filter(date__range=[start_date, end_date])
+    
+    combined_speaker = defaultdict(int)
+    combined_lang = defaultdict(int)
+    combined_emo = defaultdict(int)
+    
+    for stat in agent_stats:
+        for spk, count in stat.speaker_distribution.items():
+            combined_speaker[spk] += count
+        for lang, count in stat.language_distribution.items():
+            combined_lang[lang] += count
+        for emo_dict in stat.emotion_distribution:
+            spk = emo_dict['speaker']
+            emo = emo_dict['emotion']
+            combined_emo[(spk, emo)] += emo_dict['count']
+
+    speaker_labels = list(combined_speaker.keys())
+    speaker_values = list(combined_speaker.values())
+    lang_labels = list(combined_lang.keys())
+    lang_values = list(combined_lang.values())
+
+    speakers = list(set([k[0] for k in combined_emo.keys()]))
+    emotions = list(set([k[1] for k in combined_emo.keys()]))
+    emotion_plot_data = []
+
+    for emo in emotions:
+        y_values = []
+        for spk in speakers:
+            y_values.append(combined_emo.get((spk, emo), 0))
+        emotion_plot_data.append({
+            'x': speakers,
+            'y': y_values,
+            'name': emo.title(),
+            'type': 'bar',
+            'marker': {'color': EMOTION_COLORS.get(emo, COLORS['neutral'])}
+        })
+
+    # List of agents for the period with aggregated stats
+    agent_summaries = DailyAgentStat.objects.filter(date__range=[start_date, end_date]).values('agent_name').annotate(
+        total_calls=Sum('total_calls')
+    )
+    
+    # We need to calculate a real weighted average for the period
+    agent_list = []
+    # IMPORTANT: We must clear ordering before calling distinct() to prevent 
+    # the database from returning one row per agent per day.
+    unique_agent_names = agent_stats.values_list('agent_name', flat=True).order_by().distinct()
+    
+    for name in unique_agent_names:
+        a_stats = agent_stats.filter(agent_name=name)
+        a_total_calls = a_stats.aggregate(Sum('total_calls'))['total_calls__sum'] or 0
+        a_score_sum = sum(s.avg_score * s.total_calls for s in a_stats)
+        a_avg_score = (a_score_sum / a_total_calls) if a_total_calls > 0 else 0
+        
+        agent_list.append({
+            'name': name,
+            'total_calls': a_total_calls,
+            'avg_score': round(a_avg_score, 1)
+        })
+        
+    # Sort by total calls descending
+    agent_list = sorted(agent_list, key=lambda x: x['total_calls'], reverse=True)
+
     return {
         'total_calls': total_calls,
         'agents_count': agents_count,
@@ -91,6 +160,12 @@ def get_overview_stats(start_date, end_date):
         'main_emotion': main_emotion,
         'emotion_percent': emotion_percent,
         'emotion_color': emotion_color,
+        'speaker_labels': speaker_labels,
+        'speaker_values': speaker_values,
+        'lang_labels': lang_labels,
+        'lang_values': lang_values,
+        'emotion_plot_data': emotion_plot_data,
+        'agent_list': agent_list,
     }
 
 def get_cost_stats(start_date, end_date):
@@ -247,7 +322,7 @@ def recalculate_aggregations(target_date):
     )
 
     # Update Agent Stats
-    agent_names = calls_on_date.values_list('agent_name', flat=True).distinct()
+    agent_names = list(calls_on_date.values_list('agent_name', flat=True).distinct())
     
     # First delete stats for agents that might not have calls anymore today but had before
     DailyAgentStat.objects.filter(date=target_date).exclude(agent_name__in=agent_names).delete()
