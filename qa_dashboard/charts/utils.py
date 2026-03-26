@@ -2,14 +2,14 @@ import plotly.graph_objects as go
 
 # Brand and Functional Colors
 COLORS = {
-    'primary': '#FF4F18',     # Roojai Orange
-    'primary_dark': '#E63E00',
-    'secondary': '#1E293B',    # Slate Dark
-    'success': '#10B981',      # Emerald
-    'warning': '#F59E0B',      # Amber
-    'danger': '#EF4444',       # Rose/Red
-    'info': '#3B82F6',         # Blue
-    'neutral': '#9CA3AF',      # Gray
+    'primary': '#ff5011',     # Roojai Orange
+    'primary_dark': '#212529',
+    'secondary': '#003b71',    # Roojai Blue
+    'success': '#198754',
+    'warning': '#ffc107',
+    'danger': '#dc3545',
+    'info': '#0dcaf0',
+    'neutral': '#94A3B8',      # Slate
     'grid': '#E2E8F0',         # Light Border
     'bg_transparent': 'rgba(0,0,0,0)',
 }

@@ -32,7 +32,7 @@ def get_qa_trend_chart(trend_data):
             line=dict(color=COLORS['primary'], width=4, shape='spline'),
             marker=dict(size=8, color=COLORS['primary']),
             fill='tozeroy',
-            fillcolor=f"rgba(255, 79, 24, 0.1)"
+            fillcolor='rgba(255, 80, 17, 0.1)'
         )
     ])
     

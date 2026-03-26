@@ -10,7 +10,7 @@ def get_api_expenditure_trend(trend_data):
             x=trend_data['x'],
             y=trend_data['y'],
             fill='tozeroy',
-            fillcolor='rgba(16, 185, 129, 0.1)',
+            fillcolor='rgba(25, 135, 84, 0.1)',
             line=dict(color=COLORS['success'], width=3)
         )
     ])

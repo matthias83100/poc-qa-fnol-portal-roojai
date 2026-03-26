@@ -29,6 +29,17 @@
             <h5 class="fw-bold text-dark mb-1">{{ agent.username|title }}</h5>
             <span class="text-muted small mb-3">{% trans "Manager" %}: {{ agent.manager.username|default:_("Global")|title }}</span>
 
+            <div class="d-flex justify-content-between w-100 px-3 mb-4">
+                <div class="text-center">
+                    <span class="text-muted smallest d-block uppercase-label">{% trans "Calls Today" %}</span>
+                    <span class="fw-bold">{{ agent.today_calls }}</span>
+                </div>
+                <div class="text-center border-start ps-3" style="border-color: rgba(0,0,0,0.05) !important;">
+                    <span class="text-muted smallest d-block uppercase-label">{% trans "Avg Score" %}</span>
+                    <span class="fw-bold text-primary">{{ agent.today_avg_score }}%</span>
+                </div>
+            </div>
+
             <a href="{% url 'agent_detail' agent.username %}" class="btn btn-premium w-100 mt-auto">{% trans "Open Analytics" %}</a>
         </div>
     </div>

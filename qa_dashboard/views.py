@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 import json
 import datetime
+from django.db.models import Count, Avg
 from .models import CallReport
 from . import services
 from . import charts
@@ -38,13 +39,24 @@ def agent_dashboard(request):
     # Get distinct agents from CallReports
     agents_data = CallReport.objects.values('agent_name', 'manager_name').distinct()
     
+    # Get today's stats from CallReport
+    today = timezone.now().date()
+    today_stats_query = CallReport.objects.filter(date_processed__date=today).values('agent_name').annotate(
+        total_calls=Count('id'),
+        avg_score=Avg('overall_score')
+    )
+    today_stats = {s['agent_name']: s for s in today_stats_query}
+    
     # Structure for template compatibility
     agents = []
     for item in agents_data:
+        stats = today_stats.get(item['agent_name'], {'total_calls': 0, 'avg_score': 0})
         agents.append({
             'username': item['agent_name'],
             'manager': {'username': item['manager_name']},
-            'name_slug': item['agent_name'] # Used for routing
+            'name_slug': item['agent_name'], # Used for routing
+            'today_calls': stats['total_calls'],
+            'today_avg_score': round(stats['avg_score'], 1) if stats['avg_score'] else 0
         })
         
     context = {'agents': agents}

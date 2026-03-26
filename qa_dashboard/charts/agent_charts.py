@@ -12,7 +12,7 @@ def get_agent_qa_progression(call_labels, call_scores):
             mode='lines+markers',
             line=dict(color=COLORS['primary'], width=3, shape='spline'),
             fill='tozeroy',
-            fillcolor='rgba(255, 79, 24, 0.05)'
+            fillcolor='rgba(255, 80, 17, 0.05)'
         )
     ])
     
