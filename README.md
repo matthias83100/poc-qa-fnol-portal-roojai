@@ -45,7 +45,7 @@ python manage.py generate_aggregated_mocks
 - **Backend**: Django (Python)
 - **Frontend**: Vanilla JS, HTML5, CSS3 (Premium Dark Theme)
 - **Charting**: Plotly.js
-- **Database**: Multiple SQLite instances (Configured for easy migration to SQL Server/Postgres)
+- **Database**: Multiple SQLite instances (Configured for easy migration to SQL Server)
 
 ## 🐳 External Data Integration
 In a production setup, the `raw_data` database is populated by an external AI pipeline. After the pipeline inserts new records, it should trigger the aggregation refresh via the API:

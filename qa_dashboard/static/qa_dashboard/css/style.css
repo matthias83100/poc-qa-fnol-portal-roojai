@@ -3,7 +3,7 @@
     /* Roojai Orange */
     --primary-dark: #212529;
     --secondary: #003b71;
-    --accent: #3B82F6;
+    --accent: #0d6efd;
     --bg-light: #f1f2f6;
     --glass: rgba(255, 255, 255, 0.8);
     --glass-border: rgba(255, 255, 255, 0.4);
@@ -283,6 +283,7 @@ body {
     color: var(--primary) !important;
     background: rgba(255, 79, 24, 0.05);
 }
+
 .smallest {
     font-size: 0.7rem;
 }
