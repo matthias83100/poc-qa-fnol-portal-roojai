@@ -16,27 +16,12 @@
 <body>
     <nav class="sidebar">
         <h5>{% trans "Roojai FNOL QA" %}</h5>
-        <!-- <div class="mb-5 p-3 rounded" style="background: rgba(255,255,255,0.05);">
-            <div class="d-flex align-items-center mb-2">
-                <i class="bi bi-person-circle fs-4 me-2 text-primary"></i>
-                <span class="small fw-bold">{{ request.user.username|title }}</span>
-            </div>
-            <span class="badge bg-primary w-100" style="font-size: 0.7rem;">{{ request.user.get_role_display }}</span>
-        </div> -->
 
         <div class="nav flex-column" id="mainNav">
             <a class="nav-link {% if request.resolver_match.url_name == 'overview' %}active{% endif %}"
                 href="{% url 'overview' %}">
                 <i class="bi bi-grid-fill"></i> {% trans "Overview" %}
             </a>
-            <!-- <a class="nav-link {% if request.resolver_match.url_name == 'manager_dashboard' or request.resolver_match.url_name == 'manager_detail' %}active{% endif %}"
-                href="{% url 'manager_dashboard' %}">
-                <i class="bi bi-people-fill"></i> {% trans "Management" %}
-            </a> -->
-            <!-- <a class="nav-link {% if request.resolver_match.url_name == 'agent_dashboard' or request.resolver_match.url_name == 'agent_detail' %}active{% endif %}"
-                href="{% url 'agent_dashboard' %}">
-                <i class="bi bi-headset"></i> {% trans "Agents" %}
-            </a> -->
             <a class="nav-link {% if request.resolver_match.url_name == 'agent_dashboard' or request.resolver_match.url_name == 'agent_detail' %}active{% endif %}"
                 href="{% url 'agent_dashboard' %}">
                 <i class="bi bi-headset"></i> {% trans "Real-time Monitoring" %}
@@ -46,15 +31,6 @@
                 <i class="bi bi-currency-dollar"></i> {% trans "Cost & Performances" %}
             </a>
         </div>
-
-        <!-- <div style="position: absolute; bottom: 2rem; width: 190px;">
-            <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-outline-light w-100 rounded-pill btn-sm">
-                    <i class="bi bi-box-arrow-right me-2"></i> {% trans "Logout" %}
-                </button>
-            </form>
-        </div> -->
     </nav>
 
     <main class="main-content">
@@ -112,62 +88,10 @@
             </div>
         </div>
 
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show rounded-pill" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endfor %}
-        {% endif %}
-
         {% block content %}{% endblock %}
     </main>
 
     <script src="{% static 'qa_dashboard/js/bootstrap.bundle.min.js' %}"></script>
-    <script>
-        const searchInput = document.getElementById('sidebarSearch');
-        if (searchInput) {
-            searchInput.addEventListener('input', function (e) {
-                const term = e.target.value.toLowerCase();
-                const items = document.querySelectorAll('[data-search-term]');
-                items.forEach(item => {
-                    const text = item.getAttribute('data-search-term').toLowerCase();
-                    if (text.includes(term)) {
-                        item.style.display = '';
-                        if (item.parentElement.classList.contains('col-md-3') || item.parentElement.classList.contains('col-md-4')) {
-                            item.parentElement.style.display = '';
-                        }
-                    } else {
-                        item.style.display = 'none';
-                        if (item.parentElement.classList.contains('col-md-3') || item.parentElement.classList.contains('col-md-4')) {
-                            item.parentElement.style.display = 'none';
-                        }
-                    }
-                });
-
-                const resultsRow = document.querySelector('.row.g-4');
-                if (resultsRow) {
-                    const visibleItems = resultsRow.querySelectorAll('[data-search-term]:not([style*="display: none"])');
-                    const emptyMsg = document.getElementById('searchEmptyMsg');
-                    if (visibleItems.length === 0 && term !== '') {
-                        if (!emptyMsg) {
-                            const msg = document.createElement('div');
-                            msg.id = 'searchEmptyMsg';
-                            msg.className = 'col-12 text-center py-5';
-                            msg.innerHTML = '<div class="card-premium d-inline-block px-5"><i class="bi bi-search fs-1 text-muted mb-3 d-block"></i><h5>No results for "' + term + '"</h5></div>';
-                            resultsRow.appendChild(msg);
-                        } else {
-                            emptyMsg.querySelector('h5').innerText = 'No results for "' + term + '"';
-                            emptyMsg.style.display = '';
-                        }
-                    } else if (emptyMsg) {
-                        emptyMsg.style.display = 'none';
-                    }
-                }
-            });
-        }
-    </script>
 </body>
 
 </html>

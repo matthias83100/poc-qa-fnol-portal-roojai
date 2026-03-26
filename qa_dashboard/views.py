@@ -1,17 +1,13 @@
 from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from .decorators import role_required
-from .models import CustomUser, CallReport, QACategory, QAQuestion, Utterance
-from django.db.models import Avg, Count, F, Q
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
-from datetime import timedelta
 import json
-from collections import Counter
+import datetime
+from .models import CallReport
+from . import services
 from . import charts
 
-from . import services
-
-@login_required
 def overview_dashboard(request):
     """
     Overview: stats for the whole call center with global date filtering.
@@ -38,71 +34,26 @@ def overview_dashboard(request):
     return render(request, 'overview.html', context)
 
 
-@login_required
-@role_required('TOP_MANAGEMENT', 'MANAGER')
-def manager_dashboard(request):
-    if request.user.role == 'TOP_MANAGEMENT':
-        managers = CustomUser.objects.filter(role='MANAGER')
-    else:
-        managers = CustomUser.objects.filter(id=request.user.id)
-        
-    context = {'managers': managers}
-    return render(request, 'manager.html', context)
-
-
-@login_required
-@role_required('TOP_MANAGEMENT', 'MANAGER')
-def manager_detail(request, manager_id):
-    manager = get_object_or_404(CustomUser, id=manager_id, role='MANAGER')
-    if request.user.role == 'MANAGER' and request.user.id != manager.id:
-        from django.core.exceptions import PermissionDenied
-        raise PermissionDenied("Access Denied")
-        
-    start_date, end_date = services.get_date_range(request)
-    stats = services.get_manager_stats(manager, start_date, end_date)
-
-    # Python-based chart generation
-    comparison_chart_json = charts.get_agent_comparison_chart(stats['agent_names'], stats['agent_scores'])
-
-    context = {
-        'manager_user': manager,
-        'agents': stats['agents'],
-        'calls_count': stats['calls_count'],
-        'comparison_chart_json': comparison_chart_json,
-        'start_date': start_date.strftime('%Y-%m-%d'),
-        'end_date': end_date.strftime('%Y-%m-%d'),
-    }
-    return render(request, 'manager_detail.html', context)
-
-
-@login_required
 def agent_dashboard(request):
-    if request.user.role == 'TOP_MANAGEMENT':
-        agents = CustomUser.objects.filter(role='AGENT')
-    elif request.user.role == 'MANAGER':
-        agents = CustomUser.objects.filter(role='AGENT', manager=request.user)
-    today = timezone.now().date()
-    agents = agents.annotate(
-        today_calls_count=Count('calls', filter=Q(calls__date_processed__date=today)),
-        today_avg_score=Avg('calls__overall_score', filter=Q(calls__date_processed__date=today))
-    )
+    # Get distinct agents from CallReports
+    agents_data = CallReport.objects.values('agent_name', 'manager_name').distinct()
     
+    # Structure for template compatibility
+    agents = []
+    for item in agents_data:
+        agents.append({
+            'username': item['agent_name'],
+            'manager': {'username': item['manager_name']},
+            'name_slug': item['agent_name'] # Used for routing
+        })
+        
     context = {'agents': agents}
     return render(request, 'agent.html', context)
 
 
-@login_required
-def agent_detail(request, agent_id):
-    agent = get_object_or_404(CustomUser, id=agent_id, role='AGENT')
-    if request.user.role == 'AGENT' and request.user.id != agent.id:
-        from django.core.exceptions import PermissionDenied
-        raise PermissionDenied("Access Denied")
-    elif request.user.role == 'MANAGER' and agent.manager_id != request.user.id:
-        from django.core.exceptions import PermissionDenied
-        raise PermissionDenied("Access Denied")
-        
+def agent_detail(request, agent_name):
     start_date, end_date = services.get_date_range(request)
-    stats = services.get_agent_stats(agent, start_date, end_date)
+    stats = services.get_agent_stats(agent_name, start_date, end_date)
 
     # Python-based chart generation
     qa_progression_json = charts.get_agent_qa_progression(stats['call_labels'], stats['call_scores'])
@@ -111,46 +62,62 @@ def agent_detail(request, agent_id):
     emotion_analysis_json = charts.get_emotion_analysis(stats['emotion_plot_data'])
 
     context = {
-        'agent': agent,
+        'agent': {'username': agent_name},
         'calls': stats['calls'],
-        'lifetime_total_calls': stats['lifetime_total_calls'],
         'qa_progression_json': qa_progression_json,
         'speaker_dist_json': speaker_dist_json,
         'lang_usage_json': lang_usage_json,
         'emotion_analysis_json': emotion_analysis_json,
         'lifetime_avg_score': stats['lifetime_avg_score'],
+        'lifetime_total_calls': stats['lifetime_total_calls'],
         'start_date': start_date.strftime('%Y-%m-%d'),
         'end_date': end_date.strftime('%Y-%m-%d'),
     }
     return render(request, 'agent_detail.html', context)
 
 
-@login_required
-@role_required('TOP_MANAGEMENT')
 def cost_dashboard(request):
     start_date, end_date = services.get_date_range(request)
     stats = services.get_cost_stats(start_date, end_date)
-    
+
+    # Python-based chart generation
     cost_trend_json = charts.get_api_expenditure_trend(stats['cost_trend'])
-    
+
     context = {
-        'calls': stats['calls'],
         'total_cost': stats['total_cost'],
         'cost_trend_json': cost_trend_json,
+        'calls': stats['calls'],
         'start_date': start_date.strftime('%Y-%m-%d'),
         'end_date': end_date.strftime('%Y-%m-%d'),
     }
     return render(request, 'cost.html', context)
 
-def custom_403_view(request, exception=None):
+@csrf_exempt
+def trigger_aggregation(request):
     """
-    Custom 403 Forbidden handler.
+    API endpoint for external cronjobs to trigger stats aggregation.
+    Expects a POST request. Optionally accepts a JSON body with a 'date' field (YYYY-MM-DD).
+    If no date is provided, defaults to today's date.
     """
-    error_msg = str(exception)
-    if not error_msg or 'PermissionDenied' in error_msg:
-        error_msg = "It looks like you've tried to access a section of the dashboard that is restricted to higher management levels."
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
         
-    context = {
-        'error_message': error_msg
-    }
-    return render(request, '403.html', context, status=403)
+    target_date = timezone.now().date()
+    
+    if request.body:
+        try:
+            data = json.loads(request.body)
+            date_str = data.get('date')
+            if date_str:
+                target_date = datetime.datetime.strptime(date_str, '%Y-%m-%d').date()
+        except (json.JSONDecodeError, ValueError):
+            return JsonResponse({'error': 'Invalid JSON or date format. Use YYYY-MM-DD'}, status=400)
+            
+    try:
+        services.recalculate_aggregations(target_date)
+        return JsonResponse({
+            'status': 'success',
+            'message': f'Aggregations recalculated successfully for {target_date}'
+        })
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

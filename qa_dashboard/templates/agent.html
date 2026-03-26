@@ -12,10 +12,6 @@
 {% endblock %}
 
 {% block content %}
-<div class="glass-header mb-4 py-2 px-4 shadow-sm">
-    <p class="text-muted mb-0"><i class="bi bi-info-circle me-2"></i> {% trans "Authorized access verified. Displaying agents within your organizational scope." %}</p>
-</div>
-
 <div class="row g-4">
     {% for agent in agents %}
     <div class="col-md-3">
@@ -33,20 +29,7 @@
             <h5 class="fw-bold text-dark mb-1">{{ agent.username|title }}</h5>
             <span class="text-muted small mb-3">{% trans "Manager" %}: {{ agent.manager.username|default:_("Global")|title }}</span>
 
-            <div class="w-100 bg-light-subtle rounded-3 p-2 mb-3">
-                <div class="row g-0">
-                    <div class="col-6 border-end">
-                        <small class="d-block text-muted" style="font-size: 0.65rem;">{% trans "CALLS TODAY" %}</small>
-                        <span class="fw-bold">{{ agent.today_calls_count }}</span>
-                    </div>
-                    <div class="col-6">
-                        <small class="d-block text-muted" style="font-size: 0.65rem;">{% trans "AVG SCORE" %}</small>
-                        <span class="fw-bold text-primary">{{ agent.today_avg_score|default:0|floatformat:1 }}</span>
-                    </div>
-                </div>
-            </div>
-
-            <a href="{% url 'agent_detail' agent.id %}" class="btn btn-premium w-100 mt-auto">{% trans "Open Analytics" %}</a>
+            <a href="{% url 'agent_detail' agent.username %}" class="btn btn-premium w-100 mt-auto">{% trans "Open Analytics" %}</a>
         </div>
     </div>
     {% empty %}
@@ -54,7 +37,7 @@
         <div class="card-premium d-inline-block px-5">
             <i class="bi bi-search fs-1 text-muted mb-3 d-block"></i>
             <h5>{% trans "No agents found" %}</h5>
-            <p class="text-muted">{% trans "You don't have permission to view any agents in this category." %}</p>
+            <p class="text-muted">{% trans "Try adjusting your filters or generating more data." %}</p>
         </div>
     </div>
     {% endfor %}

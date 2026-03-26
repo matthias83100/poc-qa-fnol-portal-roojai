@@ -1,29 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 from django.db.models import Count, Q
 
-class CustomUser(AbstractUser):
-    ROLE_CHOICES = (
-        ('TOP_MANAGEMENT', 'Top Management'),
-        ('MANAGER', 'Manager'),
-        ('AGENT', 'Agent'),
-    )
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='AGENT', db_index=True)
-    manager = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='team_members')
-
-    @property
-    def total_calls(self):
-        if self.role == 'AGENT':
-            return self.calls.count()
-        elif self.role == 'MANAGER':
-            return CallReport.objects.filter(agent__manager=self).count()
-        return CallReport.objects.count()
-
-    def __str__(self):
-        return f"{self.username} - {self.get_role_display()}"
-
 class CallReport(models.Model):
-    agent = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='calls')
+    agent_name = models.CharField(max_length=150, db_index=True)
+    manager_name = models.CharField(max_length=150, db_index=True)
     filename = models.CharField(max_length=255)
     date_processed = models.DateTimeField(auto_now_add=True, db_index=True)
     duration = models.CharField(max_length=50) 
@@ -50,7 +30,7 @@ class CallReport(models.Model):
         return (yes / total * 100) if total > 0 else 0
 
     def __str__(self):
-        return f"{self.filename} by {self.agent.username}"
+        return f"{self.filename} by {self.agent_name}"
 
 class Utterance(models.Model):
     call_report = models.ForeignKey(CallReport, on_delete=models.CASCADE, related_name='transcript')
@@ -85,3 +65,36 @@ class QAQuestion(models.Model):
 
     def __str__(self):
         return f"Q{self.question_id}: {self.question}"
+
+class DailyOverviewStat(models.Model):
+    date = models.DateField(unique=True, db_index=True)
+    total_calls = models.IntegerField(default=0)
+    agents_count = models.IntegerField(default=0)
+    avg_score = models.FloatField(default=0.0)
+    category_averages = models.JSONField(default=dict)
+    main_emotion = models.CharField(max_length=50, default="N/A")
+    emotion_percent = models.FloatField(default=0.0)
+    emotion_color = models.CharField(max_length=50, default="var(--neutral)")
+    total_cost = models.FloatField(default=0.0)
+
+    class Meta:
+        ordering = ['-date']
+
+    def __str__(self):
+        return f"Overview Stats for {self.date}"
+
+class DailyAgentStat(models.Model):
+    date = models.DateField(db_index=True)
+    agent_name = models.CharField(max_length=150, db_index=True)
+    total_calls = models.IntegerField(default=0)
+    avg_score = models.FloatField(default=0.0)
+    speaker_distribution = models.JSONField(default=dict)
+    language_distribution = models.JSONField(default=dict)
+    emotion_distribution = models.JSONField(default=list)
+
+    class Meta:
+        unique_together = ('date', 'agent_name')
+        ordering = ['-date']
+
+    def __str__(self):
+        return f"Agent Stats for {self.agent_name} on {self.date}"
