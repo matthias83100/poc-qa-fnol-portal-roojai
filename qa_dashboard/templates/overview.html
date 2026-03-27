@@ -56,7 +56,7 @@
     </div>
     <div class="mb-5 px-3">
         <button class="btn btn-premium w-100 py-3 rounded-4 shadow-sm d-flex justify-content-between align-items-center"
-                type="button" data-bs-toggle="collapse" data-bs-target="#agentOverviewCollapse">
+            type="button" data-bs-toggle="collapse" data-bs-target="#agentOverviewCollapse">
             <span class="fs-5 fw-bold"><i class="bi bi-people-fill me-2"></i>{% trans "Agents Details Overview" %}</span>
             <i class="bi bi-chevron-down"></i>
         </button>
@@ -80,8 +80,9 @@
                                 </td>
                                 <td class="text-center">{{ agent.total_calls }}</td>
                                 <td class="text-end pe-4">
-                                    <span class="fw-bold {% if agent.avg_score >= 80 %}text-success{% elif agent.avg_score >= 60 %}text-warning{% else %}text-danger{% endif %}">
-                                        {{ agent.avg_score }}%
+                                    <span
+                                        class="fw-bold {% if agent.avg_score >= 80 %}text-success{% elif agent.avg_score >= 60 %}text-warning{% else %}text-danger{% endif %}">
+                                        {{ agent.avg_score|floatformat:0 }}%
                                     </span>
                                 </td>
                             </tr>
@@ -99,9 +100,7 @@
             <i class="bi bi-calendar-x fs-1 text-muted mb-3 d-block"></i>
             <h4>{% trans "No data for this period" %}</h4>
             <p class="text-muted">{% trans "Try adjusted the date filter above to see more results." %}</p>
-            <a href="{% url 'overview' %}" class="btn btn-outline-primary btn-sm rounded-pill mt-3">{% trans "Reset
-                Filters"
-                %}</a>
+            <a href="{% url 'overview' %}" class="btn btn-outline-primary btn-sm rounded-pill mt-3">{% trans "Reset Filters" %}</a>
         </div>
     </div>
     {% endif %}

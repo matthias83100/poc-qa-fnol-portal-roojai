@@ -30,7 +30,9 @@ def get_speaker_distribution(labels, values):
             labels=labels,
             values=values,
             hole=0.5,
-            marker_colors=[COLORS['primary'], COLORS['success'], COLORS['info']]
+            marker_colors=[COLORS['primary'], COLORS['success'], COLORS['info']],
+            textinfo='percent', 
+            texttemplate='%{percent:.0%}'
         )
     ])
     
