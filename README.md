@@ -52,3 +52,27 @@ In a production setup, the `raw_data` database is populated by an external AI pi
 ```bash
 curl -X POST http://your-app/api/trigger-aggregation/ -d '{"date": "2024-03-26"}'
 ```
+
+## 🌍 Internationalization (Locales)
+
+To activate Thai language support on a Linux server (Ubuntu/Debian) and ensure Django correctly handles translations, run the following commands:
+
+```bash
+# 1. Update package list
+sudo apt-get update
+
+# 2. Install locale package
+sudo apt-get install -y locales
+
+# 3. Generate Thai locale
+sudo locale-gen th_TH.UTF-8
+
+# 4. Set system-wide locale (Optional)
+sudo update-locale LANG=th_TH.UTF-8
+
+# 5. Compile Django translations (if using .po files)
+python manage.py compilemessages
+
+# 6. Verify changes
+locale -a | grep th
+```
