@@ -16,7 +16,7 @@
 <body>
     <nav class="sidebar">
         <div class="text-center mb-4">
-            <img src="{% static 'qa_dashboard/images/logo.jpg' %}" alt="Roojai Logo" class="sidebar-logo">
+            <img src="{% static 'qa_dashboard/images/logo.png' %}" alt="Roojai Logo" class="sidebar-logo">
         </div>
         <h5>{% trans "Roojai FNOL QA" %}</h5>
 
@@ -47,7 +47,8 @@
                 <form method="GET"
                     class="d-flex align-items-center gap-2 m-0 bg-white p-1 ps-3 rounded-pill shadow-sm border filter-form">
                     <div class="d-flex align-items-center small text-muted border-end pe-3 py-1">
-                        <i class="bi bi-calendar-range text-primary me-2"></i> <span class="fw-semibold">{% trans "Date" %}</span>
+                        <i class="bi bi-calendar-range text-primary me-2"></i> <span class="fw-semibold">{% trans "Date"
+                            %}</span>
                     </div>
                     <div class="d-flex align-items-center px-2">
                         <input type="date" name="start_date" value="{{ start_date|default:'' }}"
