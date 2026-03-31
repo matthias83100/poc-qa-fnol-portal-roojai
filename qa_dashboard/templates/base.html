@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roojai FNOL QA - Monitoring & Analytics</title>
+    <title>Roojai QA Portal- Monitoring & Analytics</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="{% static 'qa_dashboard/css/bootstrap.min.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'qa_dashboard/css/bootstrap-icons.css' %}">
@@ -18,7 +18,7 @@
         <div class="text-center mb-4">
             <img src="{% static 'qa_dashboard/images/logo.png' %}" alt="Roojai Logo" class="sidebar-logo">
         </div>
-        <h5>{% trans "Roojai FNOL QA" %}</h5>
+        <h5>{% trans "Roojai QA Portal" %}</h5>
 
         <div class="nav flex-column" id="mainNav">
             <a class="nav-link {% if request.resolver_match.url_name == 'overview' %}active{% endif %}"
@@ -44,11 +44,10 @@
             </div>
             <div class="d-flex align-items-center gap-3">
                 {% block header_controls %}
-                <form method="GET"
+                <form method="GET" id="filterForm" onsubmit="return validateDateRange(this)"
                     class="d-flex align-items-center gap-2 m-0 bg-white p-1 ps-3 rounded-pill shadow-sm border filter-form">
                     <div class="d-flex align-items-center small text-muted border-end pe-3 py-1">
-                        <i class="bi bi-calendar-range text-primary me-2"></i> <span class="fw-semibold">{% trans "Date"
-                            %}</span>
+                        <i class="bi bi-calendar-range text-primary me-2"></i> <span class="fw-semibold">{% trans "Date" %}</span>
                     </div>
                     <div class="d-flex align-items-center px-2">
                         <input type="date" name="start_date" value="{{ start_date|default:'' }}"
@@ -59,13 +58,24 @@
                             class="form-control form-control-sm border-0 bg-transparent text-secondary fw-medium custom-date-input"
                             placeholder="End" style="min-width: 110px;">
                     </div>
+                    <div class="d-flex align-items-center small text-muted border-start border-end px-3 py-1">
+                        <i class="bi bi-funnel text-primary me-2"></i> <span class="fw-semibold">{% trans "Queue" %}</span>
+                    </div>
+                    <div class="d-flex align-items-center px-2">
+                        <select name="queue" class="form-select form-select-sm border-0 bg-transparent text-secondary fw-medium" style="min-width: 100px;">
+                            <option value="">{% trans "All Queues" %}</option>
+                            <option value="RJI" {% if selected_queue == 'RJI' %}selected{% endif %}>RJI</option>
+                            <option value="Thai" {% if selected_queue == 'Thai' %}selected{% endif %}>Thai</option>
+                            <option value="English" {% if selected_queue == 'English' %}selected{% endif %}>English</option>
+                        </select>
+                    </div>
                     <div class="d-flex gap-1 pe-1">
                         <button type="submit"
                             class="btn btn-premium btn-sm rounded-pill px-3 d-flex align-items-center justify-content-center"
                             style="padding: 0.4rem 1rem;">
                             <i class="bi bi-search"></i>
                         </button>
-                        {% if start_date or end_date %}
+                        {% if start_date or end_date or selected_queue %}
                         <a href="{{ request.path }}"
                             class="btn btn-light btn-sm rounded-pill px-3 d-flex align-items-center text-danger border justify-content-center"
                             style="padding: 0.4rem 1rem;">
@@ -95,7 +105,40 @@
         {% block content %}{% endblock %}
     </main>
 
+    <!-- Toast for Notifications -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="dateRangeToast" class="toast align-items-center text-white bg-danger border-0 rounded-4 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex p-2">
+                <div class="toast-body fw-bold">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    {% trans "Data older than 3 months (90 days) is not available. Please select a more recent date." %}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
     <script src="{% static 'qa_dashboard/js/bootstrap.bundle.min.js' %}"></script>
+    <script>
+        function validateDateRange(form) {
+            const startStr = form.start_date.value;
+            const endStr = form.end_date.value;
+            if (startStr) {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const start = new Date(startStr);
+                const diffTime = today - start;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+                if (diffDays > 90) {
+                    const toastElement = document.getElementById('dateRangeToast');
+                    const toast = new bootstrap.Toast(toastElement);
+                    toast.show();
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
 </body>
 
 </html>

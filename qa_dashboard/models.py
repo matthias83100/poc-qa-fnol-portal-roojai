@@ -14,6 +14,7 @@ class CallReport(models.Model):
     prompt_tokens = models.IntegerField(null=True, blank=True)
     candidates_tokens = models.IntegerField(null=True, blank=True)
     cost_thb = models.FloatField(null=True, blank=True)
+    queue = models.CharField(max_length=50, db_index=True, default='RJI')
     overall_score = models.FloatField(default=0.0, help_text="Denormalized QA score")
     
     @property

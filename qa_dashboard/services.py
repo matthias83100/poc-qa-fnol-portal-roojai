@@ -22,15 +22,22 @@ def get_date_range(request):
         
     if start_date_str:
         start_date = timezone.datetime.strptime(start_date_str, '%Y-%m-%d').date()
+        # Cap the history to the last 90 days (approx. 3 months)
+        if (today - start_date).days > 90:
+            start_date = today - timedelta(days=90)
     else:
         start_date = end_date - timedelta(days=7)
         
     return start_date, end_date
 
-def get_overview_stats(start_date, end_date):
+def get_overview_stats(start_date, end_date, queue=None):
     """
     Calculate stats for the overview dashboard using aggregated models.
+    If a queue is provided, falls back to raw data for accurate filtering.
     """
+    if queue:
+        return _get_overview_stats_from_raw(start_date, end_date, queue)
+
 
     stats = DailyOverviewStat.objects.filter(date__range=[start_date, end_date]).order_by('date')
     
@@ -164,10 +171,147 @@ def get_overview_stats(start_date, end_date):
         'agent_list': agent_list,
     }
 
-def get_cost_stats(start_date, end_date):
+def _get_overview_stats_from_raw(start_date, end_date, queue):
     """
-    Calculate cost metrics using aggregated models.
+    Fallback method to calculate overview stats from raw CallReport data when filtering by queue.
     """
+    calls = CallReport.objects.filter(
+        date_processed__date__range=[start_date, end_date],
+        queue=queue
+    )
+    
+    total_calls = calls.count()
+    agents_count = calls.values('agent_name').distinct().count()
+    avg_score = calls.aggregate(Avg('overall_score'))['overall_score__avg'] or 0
+
+    # Category Performance
+    categories = QACategory.objects.filter(call_report__in=calls).values('category_name').annotate(
+        yes_count=Count('questions', filter=Q(questions__answer='Yes')),
+        total_count=Count('questions', filter=Q(questions__answer__in=['Yes', 'No']))
+    )
+    cat_labels = []
+    cat_values = []
+    for cat in categories:
+        cat_labels.append(cat['category_name'].replace('_', ' ').title())
+        val = (cat['yes_count'] / cat['total_count'] * 100) if cat['total_count'] > 0 else 0
+        cat_values.append(round(val, 1))
+
+    # Trend Data
+    delta = end_date - start_date
+    trend_x = []
+    trend_y = []
+    step = max(1, delta.days // 14)
+    
+    current_day = start_date
+    while current_day <= end_date:
+        day_avg = calls.filter(date_processed__date=current_day).aggregate(Avg('overall_score'))['overall_score__avg'] or 0
+        trend_x.append(current_day.strftime('%Y-%m-%d'))
+        trend_y.append(round(day_avg, 1))
+        current_day += timedelta(days=step)
+
+    # Emotions and Distributions
+    all_utterances = Utterance.objects.filter(call_report__in=calls)
+    
+    # Main Emotion
+    customer_utterances = all_utterances.filter(speaker='CUSTOMER')
+    total_customer_utts = customer_utterances.count()
+    main_emotion = "N/A"
+    emotion_percent = 0.0
+    emotion_color = "var(--primary)"
+    
+    if total_customer_utts > 0:
+        emotion_counts = customer_utterances.values('emotion').annotate(count=Count('id')).order_by('-count')
+        if emotion_counts:
+            top_emo = emotion_counts[0]
+            main_emotion = top_emo['emotion'].title()
+            emotion_percent = round((top_emo['count'] / total_customer_utts) * 100, 1)
+            emotion_color = EMOTION_COLORS.get(top_emo['emotion'], COLORS['primary'])
+
+    # Distributions
+    speaker_counts = all_utterances.values('speaker').annotate(count=Count('id'))
+    speaker_labels = [s['speaker'] for s in speaker_counts]
+    speaker_values = [s['count'] for s in speaker_counts]
+
+    lang_counts = all_utterances.values('language').annotate(count=Count('id'))
+    lang_labels = [l['language'].title() for l in lang_counts]
+    lang_values = [l['count'] for l in lang_counts]
+
+    emo_counts = list(all_utterances.values('speaker', 'emotion').annotate(count=Count('id')))
+    speakers = list(set([k['speaker'] for k in emo_counts]))
+    emotions = list(set([k['emotion'] for k in emo_counts]))
+    emotion_plot_data = []
+
+    for emo in emotions:
+        y_values = []
+        for spk in speakers:
+            count = next((item['count'] for item in emo_counts if item['speaker'] == spk and item['emotion'] == emo), 0)
+            y_values.append(count)
+        emotion_plot_data.append({
+            'x': speakers,
+            'y': y_values,
+            'name': emo.title(),
+            'type': 'bar',
+            'marker': {'color': EMOTION_COLORS.get(emo, COLORS['neutral'])}
+        })
+
+    # Agent List
+    agent_summaries = calls.values('agent_name').annotate(
+        total_calls=Count('id'),
+        avg_score=Avg('overall_score')
+    ).order_by('-total_calls')
+    
+    agent_list = []
+    for a in agent_summaries:
+        agent_list.append({
+            'name': a['agent_name'],
+            'total_calls': a['total_calls'],
+            'avg_score': round(a['avg_score'], 1)
+        })
+
+    return {
+        'total_calls': total_calls,
+        'agents_count': agents_count,
+        'avg_score': round(avg_score, 1),
+        'cat_labels': cat_labels,
+        'cat_values': cat_values,
+        'trend_data': {'x': trend_x, 'y': trend_y},
+        'main_emotion': main_emotion,
+        'emotion_percent': emotion_percent,
+        'emotion_color': emotion_color,
+        'speaker_labels': speaker_labels,
+        'speaker_values': speaker_values,
+        'lang_labels': lang_labels,
+        'lang_values': lang_values,
+        'emotion_plot_data': emotion_plot_data,
+        'agent_list': agent_list,
+    }
+
+def get_cost_stats(start_date, end_date, queue=None):
+    """
+    Calculate cost metrics using aggregated models or raw data if filtered by queue.
+    """
+    if queue:
+        calls = CallReport.objects.filter(date_processed__date__range=[start_date, end_date], queue=queue)
+        total_cost = calls.aggregate(Sum('cost_thb'))['cost_thb__sum'] or 0
+        
+        # Trend
+        delta = end_date - start_date
+        cost_x = []
+        cost_y = []
+        step = max(1, delta.days // 10)
+        current_day = start_date
+        while current_day <= end_date:
+            day_cost = calls.filter(date_processed__date=current_day).aggregate(Sum('cost_thb'))['cost_thb__sum'] or 0
+            cost_x.append(current_day.strftime('%Y-%m-%d'))
+            cost_y.append(round(float(day_cost), 2))
+            current_day += timedelta(days=step)
+            
+        return {
+            'total_cost': round(total_cost, 2),
+            'cost_trend': {'x': cost_x, 'y': cost_y},
+            'calls': calls.order_by('-date_processed')
+        }
+
     stats = DailyOverviewStat.objects.filter(date__range=[start_date, end_date]).order_by('date')
     total_cost = stats.aggregate(Sum('total_cost'))['total_cost__sum'] or 0
     
@@ -191,13 +335,15 @@ def get_cost_stats(start_date, end_date):
         'calls': CallReport.objects.filter(date_processed__date__range=[start_date, end_date])
     }
 
-def get_agent_stats(agent_name, start_date, end_date):
+def get_agent_stats(agent_name, start_date, end_date, queue=None):
     """
-    Calculate stats for an individual agent using aggregated models.
+    Calculate stats for an individual agent using aggregated models or raw data if filtered by queue.
     """
-    stats = DailyAgentStat.objects.filter(agent_name=agent_name, date__range=[start_date, end_date])
-    
-    calls = CallReport.objects.filter(agent_name=agent_name, date_processed__date__range=[start_date, end_date]).prefetch_related('transcript', 'qa_categories__questions').order_by('-date_processed')
+    filter_kwargs = {'agent_name': agent_name, 'date_processed__date__range': [start_date, end_date]}
+    if queue:
+        filter_kwargs['queue'] = queue
+        
+    calls = CallReport.objects.filter(**filter_kwargs).prefetch_related('transcript', 'qa_categories__questions').order_by('-date_processed')
     
     call_labels = [c.filename.split('_')[0] for c in calls]
     call_scores = [round(c.overall_score, 1) for c in calls]
@@ -206,16 +352,33 @@ def get_agent_stats(agent_name, start_date, end_date):
     combined_lang = defaultdict(int)
     combined_emo = defaultdict(int)
     
-    for stat in stats:
-        for spk, count in stat.speaker_distribution.items():
-            combined_speaker[spk] += count
-        for lang, count in stat.language_distribution.items():
-            combined_lang[lang] += count
-        
-        for emo_dict in stat.emotion_distribution:
+    if queue:
+        all_utterances = Utterance.objects.filter(call_report__in=calls)
+        speaker_counts = all_utterances.values('speaker').annotate(count=Count('id'))
+        for s in speaker_counts:
+            combined_speaker[s['speaker']] += s['count']
+            
+        lang_counts = all_utterances.values('language').annotate(count=Count('id'))
+        for l in lang_counts:
+            combined_lang[l['language'].title()] += l['count']
+            
+        emo_counts = list(all_utterances.values('speaker', 'emotion').annotate(count=Count('id')))
+        for emo_dict in emo_counts:
             spk = emo_dict['speaker']
             emo = emo_dict['emotion']
             combined_emo[(spk, emo)] += emo_dict['count']
+    else:
+        stats = DailyAgentStat.objects.filter(agent_name=agent_name, date__range=[start_date, end_date])
+        for stat in stats:
+            for spk, count in stat.speaker_distribution.items():
+                combined_speaker[spk] += count
+            for lang, count in stat.language_distribution.items():
+                combined_lang[lang] += count
+            
+            for emo_dict in stat.emotion_distribution:
+                spk = emo_dict['speaker']
+                emo = emo_dict['emotion']
+                combined_emo[(spk, emo)] += emo_dict['count']
 
     speaker_labels = list(combined_speaker.keys())
     speaker_values = list(combined_speaker.values())
@@ -239,10 +402,13 @@ def get_agent_stats(agent_name, start_date, end_date):
             'marker': {'color': EMOTION_COLORS.get(emo, COLORS['neutral'])}
         })
 
-    lifetime_stats = DailyAgentStat.objects.filter(agent_name=agent_name)
-    lifetime_total_calls = lifetime_stats.aggregate(Sum('total_calls'))['total_calls__sum'] or 0
-    total_score_sum = sum(s.avg_score * s.total_calls for s in lifetime_stats)
-    lifetime_avg_score = (total_score_sum / lifetime_total_calls) if lifetime_total_calls > 0 else 0
+    if queue:
+        period_total_calls = calls.count()
+        period_avg_score = calls.aggregate(Avg('overall_score'))['overall_score__avg'] or 0
+    else:
+        period_total_calls = stats.aggregate(Sum('total_calls'))['total_calls__sum'] or 0
+        total_score_sum = sum(s.avg_score * s.total_calls for s in stats)
+        period_avg_score = (total_score_sum / period_total_calls) if period_total_calls > 0 else 0
 
     return {
         'calls': calls,
@@ -253,8 +419,8 @@ def get_agent_stats(agent_name, start_date, end_date):
         'lang_labels': lang_labels,
         'lang_values': lang_values,
         'emotion_plot_data': emotion_plot_data,
-        'lifetime_avg_score': round(lifetime_avg_score, 1),
-        'lifetime_total_calls': lifetime_total_calls,
+        'period_avg_score': round(period_avg_score, 1),
+        'period_total_calls': period_total_calls,
     }
 
 def recalculate_aggregations(target_date):

@@ -238,3 +238,27 @@ msgstr "ใช่"
 
 msgid "No"
 msgstr "ไม่ใช่"
+
+msgid "Roojai QA Portal"
+msgstr "ระบบ Roojai QA Portal"
+
+msgid "Analytics Overview"
+msgstr "ภาพรวมการวิเคราะห์"
+
+msgid "Queue"
+msgstr "คิว"
+
+msgid "All Queues"
+msgstr "ทุกคิว"
+
+msgid "Thai"
+msgstr "ไทย"
+
+msgid "English"
+msgstr "อังกฤษ"
+
+msgid "RJI"
+msgstr "RJI"
+
+msgid "Data older than 3 months (90 days) is not available. Please select a more recent date."
+msgstr "ไม่สามารถดูข้อมูลที่เก่ากว่า 3 เดือน (90 วัน) ได้ โปรดเลือกวันที่ใหม่กว่านี้"

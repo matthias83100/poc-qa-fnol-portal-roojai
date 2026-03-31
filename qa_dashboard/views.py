@@ -14,7 +14,8 @@ def overview_dashboard(request):
     Overview: stats for the whole call center with global date filtering.
     """
     start_date, end_date = services.get_date_range(request)
-    stats = services.get_overview_stats(start_date, end_date)
+    queue = request.GET.get('queue')
+    stats = services.get_overview_stats(start_date, end_date, queue=queue)
 
     # Python-based chart generation
     cat_chart_json = charts.get_performance_category_chart(stats['cat_labels'], stats['cat_values'])
@@ -40,6 +41,7 @@ def overview_dashboard(request):
         'emotion_color': stats['emotion_color'],
         'start_date': start_date.strftime('%Y-%m-%d'),
         'end_date': end_date.strftime('%Y-%m-%d'),
+        'selected_queue': queue,
     }
     return render(request, 'overview.html', context)
 
@@ -91,7 +93,8 @@ def agent_dashboard(request):
 
 def agent_detail(request, agent_name):
     start_date, end_date = services.get_date_range(request)
-    stats = services.get_agent_stats(agent_name, start_date, end_date)
+    queue = request.GET.get('queue')
+    stats = services.get_agent_stats(agent_name, start_date, end_date, queue=queue)
 
     # Python-based chart generation
     qa_progression_json = charts.get_agent_qa_progression(stats['call_labels'], stats['call_scores'])
@@ -106,17 +109,19 @@ def agent_detail(request, agent_name):
         'speaker_dist_json': speaker_dist_json,
         'lang_usage_json': lang_usage_json,
         'emotion_analysis_json': emotion_analysis_json,
-        'lifetime_avg_score': stats['lifetime_avg_score'],
-        'lifetime_total_calls': stats['lifetime_total_calls'],
+        'avg_score': stats['period_avg_score'],
+        'total_calls': stats['period_total_calls'],
         'start_date': start_date.strftime('%Y-%m-%d'),
         'end_date': end_date.strftime('%Y-%m-%d'),
+        'selected_queue': queue,
     }
     return render(request, 'agent_detail.html', context)
 
 
 def cost_dashboard(request):
     start_date, end_date = services.get_date_range(request)
-    stats = services.get_cost_stats(start_date, end_date)
+    queue = request.GET.get('queue')
+    stats = services.get_cost_stats(start_date, end_date, queue=queue)
 
     # Python-based chart generation
     cost_trend_json = charts.get_api_expenditure_trend(stats['cost_trend'])
@@ -127,6 +132,7 @@ def cost_dashboard(request):
         'calls': stats['calls'],
         'start_date': start_date.strftime('%Y-%m-%d'),
         'end_date': end_date.strftime('%Y-%m-%d'),
+        'selected_queue': queue,
     }
     return render(request, 'cost.html', context)
 

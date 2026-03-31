@@ -34,12 +34,12 @@
         <div class="card-premium text-center">
             <h5 class="fw-bold mb-3">{% trans "Agent KPIs" %}</h5>
             <div class="mb-4">
-                <span class="stats-label d-block mb-1">{% trans "Lifetime QA Score" %}</span>
-                <p class="stats-value text-primary">{{ lifetime_avg_score }}%</p>
+                <span class="stats-label d-block mb-1">{% trans "Avg QA Score" %}</span>
+                <p class="stats-value text-primary">{{ avg_score }}%</p>
             </div>
             <div class="d-flex justify-content-between small px-3">
                 <span class="text-muted">{% trans "Total Calls" %}</span>
-                <span class="fw-bold text-dark">{{ lifetime_total_calls }}</span>
+                <span class="fw-bold text-dark">{{ total_calls }}</span>
             </div>
         </div>
     </div>

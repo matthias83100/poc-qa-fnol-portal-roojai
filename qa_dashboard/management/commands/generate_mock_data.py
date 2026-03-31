@@ -83,6 +83,7 @@ class Command(BaseCommand):
                     prompt_tokens=random.randint(1000, 4000),
                     candidates_tokens=random.randint(100, 1200),
                     cost_thb=random.uniform(0.3, 3.5),
+                    queue=random.choice(['RJI', 'Thai', 'English']),
                     overall_score=random.uniform(60, 100) # Simplified for mock
                 )
                 # Overwrite auto_now_add
@@ -107,6 +108,7 @@ class Command(BaseCommand):
                 prompt_tokens=random.randint(1000, 4000),
                 candidates_tokens=random.randint(100, 1200),
                 cost_thb=random.uniform(0.3, 3.5),
+                queue=random.choice(['RJI', 'Thai', 'English']),
                 overall_score=random.uniform(60, 100)
             )
             CallReport.objects.filter(id=call.id).update(date_processed=call_date)
