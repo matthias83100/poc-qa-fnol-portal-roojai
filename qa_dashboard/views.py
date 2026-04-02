@@ -55,7 +55,7 @@ def agent_dashboard(request):
     
     # Get today's stats from DailyAgentStat
     today = timezone.now().date()
-    today_stats = DailyAgentStat.objects.filter(date=today)
+    today_stats = DailyAgentStat.objects.filter(date=today, queue='ALL')
     today_stats_map = {s.agent_name: {'total_calls': s.total_calls, 'avg_score': s.avg_score} for s in today_stats}
     
     # Structure for template compatibility

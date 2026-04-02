@@ -74,7 +74,8 @@ class QAQuestion(models.Model):
 
 
 class DailyOverviewStat(models.Model):
-    date = models.DateField(unique=True, db_index=True)
+    date = models.DateField(db_index=True)
+    queue = models.CharField(max_length=50, db_index=True, default='ALL')
     total_calls = models.IntegerField(default=0)
     agents_count = models.IntegerField(default=0)
     avg_score = models.FloatField(default=0.0)
@@ -85,6 +86,7 @@ class DailyOverviewStat(models.Model):
     total_cost = models.FloatField(default=0.0)
 
     class Meta:
+        unique_together = ('date', 'queue')
         ordering = ['-date']
 
     def __str__(self):
@@ -93,6 +95,7 @@ class DailyOverviewStat(models.Model):
 class DailyAgentStat(models.Model):
     date = models.DateField(db_index=True)
     agent_name = models.CharField(max_length=150, db_index=True)
+    queue = models.CharField(max_length=50, db_index=True, default='ALL')
     total_calls = models.IntegerField(default=0)
     avg_score = models.FloatField(default=0.0)
     speaker_distribution = models.JSONField(default=dict)
@@ -100,7 +103,7 @@ class DailyAgentStat(models.Model):
     emotion_distribution = models.JSONField(default=list)
 
     class Meta:
-        unique_together = ('date', 'agent_name')
+        unique_together = ('date', 'agent_name', 'queue')
         ordering = ['-date']
 
     def __str__(self):
