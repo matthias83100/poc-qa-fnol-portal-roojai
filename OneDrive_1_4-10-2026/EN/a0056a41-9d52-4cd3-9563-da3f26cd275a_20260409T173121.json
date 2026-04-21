@@ -1,0 +1,791 @@
+{
+  "filename": "connect/uat-roojai/CallRecordings/2026/03/a96d3dd2-4564-474d-86f7-94db3941786f_file1_fromprod.wav",
+  "qa_json": {
+    "categories": [
+      {
+        "category_name": "call_procedure",
+        "questions": [
+          {
+            "id": "1",
+            "question": "permission_to_record",
+            "criteria": "Did the agent ask for permission to record the conversation audio?",
+            "answer": "No",
+            "evidence": "Throughout the conversation, the agent does not inform the customer that the call is being recorded.",
+            "explanation": "The agent did not ask for permission or inform the customer about recording the audio."
+          },
+          {
+            "id": "2",
+            "question": "vehicle_registration_verified",
+            "criteria": "Did the agent verify the correctness of the registered vehicle's license plate?",
+            "answer": "Yes",
+            "evidence": "00:00:11.000 CUSTOMER: My car number is 4481. ... 00:00:18.000 AGENT: 4481 Toyota Yaris, Chonburi province, right? ... 00:00:21.000 CUSTOMER: Yes, yes.",
+            "explanation": "The agent verified the license plate number and province provided by the customer."
+          },
+          {
+            "id": "15",
+            "question": "ask_about_vehicle_damage",
+            "criteria": "Did the agent inquire about the damage to the insured vehicle (the conversation mentions the damage to the insured vehicle)?",
+            "answer": "Yes",
+            "evidence": "00:01:33.000 AGENT: Which part of your car that was damaged? Back side, front side, or driver side?",
+            "explanation": "The agent asked specifically which part of the vehicle was damaged."
+          }
+        ]
+      },
+      {
+        "category_name": "information_gathering",
+        "questions": [
+          {
+            "id": "3",
+            "question": "verify_make_model",
+            "criteria": "Did the agent verify the correctness of the reported vehicle's brand/make?",
+            "answer": "Yes",
+            "evidence": "00:00:16.000 CUSTOMER: Toyota Yaris. ... 00:00:18.000 AGENT: 4481 Toyota Yaris, Chonburi province, right?",
+            "explanation": "The agent repeated and confirmed the car brand and model with the customer."
+          },
+          {
+            "id": "4",
+            "question": "ask_date_time_of_incident",
+            "criteria": "Did the agent ask for the date and time of the incident? (If the incident occurred on the same day as the report, asking only for the time is acceptable, or if the conversation can specify the date and time of the incident.)",
+            "answer": "Yes",
+            "evidence": "00:00:27.000 AGENT: Okay, so you got the accident today just now, right? ... 00:00:30.000 CUSTOMER: Yes, yes.",
+            "explanation": "The agent asked if the accident happened today, which is acceptable for immediate notification."
+          },
+          {
+            "id": "5",
+            "question": "ask_driver_name_contact",
+            "criteria": "Did the agent ask for the driver's name and phone number? (The conversation can specify the driver's name and number.)",
+            "answer": "Yes",
+            "evidence": "00:00:32.000 AGENT: May I know who is the driver? ... 00:00:39.000 CUSTOMER: I am the driver, Sona Sharma. ... 00:00:48.000 AGENT: Your phone number to contact back at this phone number, right?",
+            "explanation": "The agent asked for the driver's name and confirmed the contact phone number."
+          },
+          {
+            "id": "6",
+            "question": "ask_incident_description",
+            "criteria": "Did the agent ask about the nature/characteristics of the incident? (The conversation mentions the nature of the incident.)",
+            "answer": "Yes",
+            "evidence": "00:01:17.000 AGENT: How did the accident happen? ... 00:01:19.000 CUSTOMER: I was taking a turn towards the right... and a bike came and crashed in.",
+            "explanation": "The agent asked how the accident happened and the customer described the collision with a bike."
+          },
+          {
+            "id": "7",
+            "question": "surveyor_appointment_details_inquired",
+            "criteria": "Was the agent able to assign the job to the Surveyor correctly? (Check if the agent asked for the Appointment Place, Surveyor Appointed Date/time, or informed that they will coordinate for the staff to contact back.)",
+            "answer": "Yes",
+            "evidence": "00:05:27.000 AGENT: It's gonna take time 30 or 40 minutes. You have to wait. ... 00:05:40.000 AGENT: I will send someone to assist you right now, ma'am.",
+            "explanation": "The agent informed the customer that a surveyor would be sent and provided an estimated time."
+          },
+          {
+            "id": "8",
+            "question": "ask_notifier_name_contact",
+            "criteria": "Did the agent ask for the caller's/notifier's name and number? (The conversation can specify the caller's name and number.)",
+            "answer": "Yes",
+            "evidence": "00:00:23.000 AGENT: May I know the owner, please? ... 00:00:48.000 AGENT: Your phone number to contact back at this phone number, right?",
+            "explanation": "The agent confirmed the identity of the caller (who is the owner) and their contact number."
+          },
+          {
+            "id": "9",
+            "question": "ask_incident_location",
+            "criteria": "Did the agent ask for the location of the incident?",
+            "answer": "Yes",
+            "evidence": "00:01:41.000 AGENT: Your location that you got the accident, please? ... 00:02:13.000 AGENT: Thai Strength Club Pattaya, right?",
+            "explanation": "The agent asked for the location and even talked to a third party to confirm the specific location details."
+          },
+          {
+            "id": "10",
+            "question": "agent_introduces_self",
+            "criteria": "Did the agent introduce themselves and the department? (Accident notification center followed by name, or name followed by accident notification center.)",
+            "answer": "No",
+            "evidence": "00:00:03.000 AGENT: คอลเซ็นเตอร์ สวัสดีครับ (Call center, hello.)",
+            "explanation": "The agent identified the department as the Call Center but did not provide their name."
+          },
+          {
+            "id": "11",
+            "question": "ask_other_party_registration",
+            "criteria": "Did the agent ask for the other party's license plate? [In case of an incident with another party] (If there is no other party, the answer is None.)",
+            "answer": "No",
+            "evidence": "Throughout the conversation, the agent identifies that a motorcycle/scooter was involved but does not ask for its license plate.",
+            "explanation": "The agent did not ask for the other party's (motorcycle) license plate information."
+          },
+          {
+            "id": "12",
+            "question": "missed_call_callback",
+            "criteria": "In case of a dropped call, did the agent contact the customer back appropriately? (Answer is None only.)",
+            "answer": "None",
+            "evidence": "There is no dropped call in this transcript.",
+            "explanation": "Not applicable."
+          },
+          {
+            "id": "13",
+            "question": "recommend_vdo_survey",
+            "criteria": "Did the agent recommend the customer to do a VDO Survey?",
+            "answer": "No",
+            "evidence": "The agent informs the customer that a physical surveyor will be sent and does not mention VDO Survey.",
+            "explanation": "The agent did not offer or recommend the VDO Survey service."
+          },
+          {
+            "id": "14",
+            "question": "customer_complaint",
+            "criteria": "Were there any complaints from the customer? (Answer is None only.)",
+            "answer": "None",
+            "evidence": "The customer did not make any complaints regarding the service during the call.",
+            "explanation": "Not applicable."
+          }
+        ]
+      },
+      {
+        "category_name": "communication_quality",
+        "questions": [
+          {
+            "id": "16",
+            "question": "ask_car_driveable",
+            "criteria": "Did the agent ask and record if the car is drivable? (Car Is Driveable)",
+            "answer": "Yes",
+            "evidence": "00:01:07.000 AGENT: Right now your car can drive or not drive? ... 00:01:10.000 CUSTOMER: Yes, yes, it can drive.",
+            "explanation": "The agent explicitly asked the customer if the vehicle was still drivable."
+          },
+          {
+            "id": "17",
+            "question": "ask_about_injuries",
+            "criteria": "Did the agent ask if anyone was injured from the incident?",
+            "answer": "Yes",
+            "evidence": "00:01:12.000 AGENT: Any people got injury or not?",
+            "explanation": "The agent asked about potential injuries resulting from the accident."
+          },
+          {
+            "id": "18",
+            "question": "surveyor_info_recorded",
+            "criteria": "Was the surveying company's information recorded correctly? Was the surveyor's name and contact number recorded? (Answer is None only.)",
+            "answer": "None",
+            "evidence": "This is internal processing information and is not part of the external dialogue.",
+            "explanation": "Not applicable."
+          },
+          {
+            "id": "19",
+            "question": "agent_tone_and_language",
+            "criteria": "Did the agent use an appropriate tone of voice and words? (Describe the characteristics of the agent's tone of voice in detail.)",
+            "answer": "Yes",
+            "evidence": "The agent maintains a professional and helpful tone, adapting to the customer's language and assisting them by speaking to a bystander to confirm the location.",
+            "explanation": "The agent was professional, polite, and tried their best to overcome the communication barrier regarding the location."
+          },
+          {
+            "id": "20",
+            "question": "agent_listens_without_interruption",
+            "criteria": "Did the agent listen to the customer and not interrupt the conversation?",
+            "answer": "Yes",
+            "evidence": "The transcript shows the agent waiting for the customer's responses and asking clarifying questions without cutting them off.",
+            "explanation": "The agent listened effectively and allowed the customer to finish their sentences."
+          },
+          {
+            "id": "21",
+            "question": "agent_appropriate_interaction",
+            "criteria": "Did the agent have appropriate interaction with the customer during the conversation?",
+            "answer": "Yes",
+            "evidence": "The agent interacted appropriately, especially by asking to speak with a Thai person to ensure the location accuracy for the customer's benefit.",
+            "explanation": "The agent's interactions were relevant, helpful, and professional."
+          },
+          {
+            "id": "22",
+            "question": "agent_eager_to_help_empathetic",
+            "criteria": "Was the agent enthusiastic about helping and empathetic towards the customer?",
+            "answer": "Yes",
+            "evidence": "00:05:40.000 AGENT: I will send someone to assist you right now, ma'am. ... 00:05:46.000 AGENT: Sure.",
+            "explanation": "The agent showed willingness to help by quickly coordinating assistance and reassuring the customer."
+          },
+          {
+            "id": "23",
+            "question": "agent_emotion_control",
+            "criteria": "Did the agent control their emotions appropriately during the conversation?",
+            "answer": "Yes",
+            "evidence": "Despite potential language confusion regarding the location, the agent remained calm and professional throughout the call.",
+            "explanation": "The agent maintained emotional control and stayed focused on solving the customer's problem."
+          }
+        ]
+      },
+      {
+        "category_name": "Other",
+        "questions": [
+          {
+            "id": "24",
+            "question": "agent_appropriate_hold",
+            "criteria": "Did the agent put the call on hold appropriately? (If there was no holding, the answer is None.)",
+            "answer": "None",
+            "evidence": "There was no official hold placed on the call.",
+            "explanation": "Not applicable."
+          },
+          {
+            "id": "25",
+            "question": "accurate_complete_advice",
+            "criteria": "Did the agent provide advice and answer the customer's questions and objections accurately and completely? (Answer is None only.)",
+            "answer": "None",
+            "evidence": "This is a qualitative requirement for the 'answer is None only' instruction.",
+            "explanation": "Not applicable."
+          },
+          {
+            "id": "26",
+            "question": "agent_impressive_closing",
+            "criteria": "Did the agent end the conversation with an impressive sentence for the customer? Example sentences...",
+            "answer": "No",
+            "evidence": "00:05:40.000 AGENT: I will send someone to assist you right now, ma'am. ... 00:05:46.000 AGENT: Sure.",
+            "explanation": "The agent ended the call with 'Sure' after the customer said 'as soon as possible', without using any of the recommended polite closing phrases."
+          },
+          {
+            "id": "27",
+            "question": "call_type",
+            "criteria": "Call Type (If the agent starts the sentence by introducing that they are contacting from Roojai, it is Outbound. If not, it is Inbound.)",
+            "answer": "Inbound",
+            "evidence": "00:00:03.000 AGENT: คอลเซ็นเตอร์ สวัสดีครับ (Call center, hello.)",
+            "explanation": "The agent answered an incoming call, characterizing it as an inbound call."
+          }
+        ]
+      }
+    ]
+  },
+  "transcript_json": {
+    "transcript": [
+      {
+        "timestamp": "00:00:03.000",
+        "speaker": "AGENT",
+        "text": "คอลเซ็นเตอร์ สวัสดีครับ",
+        "emotion": "professional",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:00:05.000",
+        "speaker": "CUSTOMER",
+        "text": "Hello, I have an insurance with Roojai.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:09.000",
+        "speaker": "AGENT",
+        "text": "Yes.",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:11.000",
+        "speaker": "CUSTOMER",
+        "text": "My car number is 4481.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:14.000",
+        "speaker": "AGENT",
+        "text": "4481. One moment please, ma'am.",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:16.000",
+        "speaker": "CUSTOMER",
+        "text": "Toyota Yaris.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:18.000",
+        "speaker": "AGENT",
+        "text": "4481 Toyota Yaris, Chonburi province, right?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:21.000",
+        "speaker": "CUSTOMER",
+        "text": "Yes, yes.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:23.000",
+        "speaker": "AGENT",
+        "text": "May I know the owner, please?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:25.000",
+        "speaker": "CUSTOMER",
+        "text": "Sona Sharma.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:27.000",
+        "speaker": "AGENT",
+        "text": "Okay, so you got the accident today just now, right?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:30.000",
+        "speaker": "CUSTOMER",
+        "text": "Yes, yes.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:32.000",
+        "speaker": "AGENT",
+        "text": "Could you please give me more information to put your information on the system, please? May I know who is the driver?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:39.000",
+        "speaker": "CUSTOMER",
+        "text": "I am the driver, Sona Sharma.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:42.000",
+        "speaker": "AGENT",
+        "text": "Okay, so right now I talk to Mrs. Sona, right?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:45.000",
+        "speaker": "CUSTOMER",
+        "text": "Yes, yes, you're talking to the owner.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:48.000",
+        "speaker": "AGENT",
+        "text": "Your phone number to contact back at this phone number, right?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:51.000",
+        "speaker": "CUSTOMER",
+        "text": "Sorry?",
+        "emotion": "confused",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:52.000",
+        "speaker": "AGENT",
+        "text": "Your phone number to contact back at this phone number, right?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:02.000",
+        "speaker": "AGENT",
+        "text": "So right now your car can drive or not drive?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:05.000",
+        "speaker": "CUSTOMER",
+        "text": "Sorry?",
+        "emotion": "confused",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:07.000",
+        "speaker": "AGENT",
+        "text": "Right now your car can drive or not drive?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:10.000",
+        "speaker": "CUSTOMER",
+        "text": "Yes, yes, it can drive.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:12.000",
+        "speaker": "AGENT",
+        "text": "Any people got injury or not?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:15.000",
+        "speaker": "CUSTOMER",
+        "text": "It is hit on the driver's door.",
+        "emotion": "anxious",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:17.000",
+        "speaker": "AGENT",
+        "text": "How did the accident happen?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:19.000",
+        "speaker": "CUSTOMER",
+        "text": "I was taking a turn towards the right after dropping my daughter to the gym and a bike came and crashed in.",
+        "emotion": "anxious",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:26.000",
+        "speaker": "AGENT",
+        "text": "The motorcycle hit you, right?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:29.000",
+        "speaker": "CUSTOMER",
+        "text": "Sorry?",
+        "emotion": "confused",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:30.000",
+        "speaker": "AGENT",
+        "text": "The motorbike hit you, right?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:32.000",
+        "speaker": "CUSTOMER",
+        "text": "Yes, yes, a scooter actually.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:33.000",
+        "speaker": "AGENT",
+        "text": "Which part of your car that was damaged? Back side, front side, or driver side?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:37.000",
+        "speaker": "CUSTOMER",
+        "text": "The driver side, driver side door.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:41.000",
+        "speaker": "AGENT",
+        "text": "Your location that you got the accident, please?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:43.000",
+        "speaker": "CUSTOMER",
+        "text": "Location is, this is, how do I tell you the location? This is Thai Strength.",
+        "emotion": "confused",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:57.000",
+        "speaker": "AGENT",
+        "text": "Did you have the Thai people around you? Can I talk with them? Because I would like to confirm the location.",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:02:13.000",
+        "speaker": "AGENT",
+        "text": "Thai Strength Club Pattaya, right?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:02:16.000",
+        "speaker": "CUSTOMER",
+        "text": "Yeah, yeah, Thai Strength Club Pattaya.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:02:18.000",
+        "speaker": "AGENT",
+        "text": "Excuse me, did you have the Thai people around you to confirm the location?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:02:29.000",
+        "speaker": "AGENT",
+        "text": "Can I talk with the Thai people around you?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:02:47.000",
+        "speaker": "CUSTOMER",
+        "text": "Can I leave or do I have to stay?",
+        "emotion": "anxious",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:02:54.000",
+        "speaker": "AGENT",
+        "text": "No, you have to wait.",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:02:56.000",
+        "speaker": "CUSTOMER",
+        "text": "I have to stay there? Okay, just a moment.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:02:59.000",
+        "speaker": "AGENT",
+        "text": "If the Thai people around you, can I talk with them? Because I would like to confirm.",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:03:08.000",
+        "speaker": "Speaker ?",
+        "text": "ฮัลโหลครับ",
+        "emotion": "neutral",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:03:09.000",
+        "speaker": "AGENT",
+        "text": "สวัสดีครับคุณพี่ผู้ชาย ผมเป็นประกันนะ อันนี้รถเกิดเหตุที่ไหนครับพี่?",
+        "emotion": "professional",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:03:13.000",
+        "speaker": "Speaker ?",
+        "text": "อ๋อ เกิดตรงนี้ ตรงก่อนถึงอ่างมาบประชันน่ะ กำจัดปลวกเนี่ย ใต้สะพานน่ะ ก่อนถึงอ่างนะ ก่อนถึงพาวเวอร์แลนด์น่ะ",
+        "emotion": "neutral",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:03:25.000",
+        "speaker": "AGENT",
+        "text": "พาวเวอร์แลนด์เหรอครับพี่?",
+        "emotion": "professional",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:03:27.000",
+        "speaker": "Speaker ?",
+        "text": "เออ พาวเวอร์แลนด์ ก่อนถึงพาวเวอร์แลนด์น่ะ ที่เข้ามามาตรงบิดกมล สี่แยกบิดกมล แล้วลูกก็มาที่อ่างมาบประชันนะ",
+        "emotion": "neutral",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:03:36.000",
+        "speaker": "AGENT",
+        "text": "สี่แยกเลยนะ บิดกมลใช่ไหม?",
+        "emotion": "professional",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:03:39.000",
+        "speaker": "Speaker ?",
+        "text": "เออ สี่แยกมอญ แล้วก็เลยมา เลยเข้ามาในอ่างมาบประชันเนี่ย กำจัดปลวก มันมียิมอยู่ตรงนี้ ไทยสปริงคลับ",
+        "emotion": "neutral",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:03:45.000",
+        "speaker": "AGENT",
+        "text": "ชื่อยิมอะไรจ๊ะพี่? ชื่อยิมอะไร?",
+        "emotion": "professional",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:03:48.000",
+        "speaker": "Speaker ?",
+        "text": "อ๋อ ยิมไทยสปริงคลับ",
+        "emotion": "neutral",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:03:51.000",
+        "speaker": "AGENT",
+        "text": "ไทยสปริงคลับ พัทยา ใช่ไหม?",
+        "emotion": "professional",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:03:54.000",
+        "speaker": "Speaker ?",
+        "text": "ใช่ๆ อยู่ในอ่างมาบประชันนี่แหละ",
+        "emotion": "neutral",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:03:56.000",
+        "speaker": "AGENT",
+        "text": "ไทยสปริงคลับ อ่างมาบประชัน สักครู่นะครับคุณพี่",
+        "emotion": "professional",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:04:16.000",
+        "speaker": "Speaker ?",
+        "text": "เออ ใช่ๆ ถูกต้องอยู่",
+        "emotion": "neutral",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:04:30.000",
+        "speaker": "AGENT",
+        "text": "แต่อยู่แถวๆ อ่างมาบประชันเนาะพี่เนาะ ใกล้ๆ",
+        "emotion": "professional",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:04:34.000",
+        "speaker": "Speaker ?",
+        "text": "เออ ก่อนถึงอ่างน้อง ก่อนถึงอ่างมาบประชันครับ",
+        "emotion": "neutral",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:04:37.000",
+        "speaker": "AGENT",
+        "text": "ได้ครับ สวนสาธารณะอ่างมาบประชันเนาะ หนูแจ้งพิกัดไปที่นี่ดีกว่า",
+        "emotion": "professional",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:04:40.000",
+        "speaker": "Speaker ?",
+        "text": "ใช่ๆ เพราะมันจะอยู่ใต้สะพานลอยเข้ามาน่ะ ก่อนถึงกำจัดปลวก",
+        "emotion": "neutral",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:04:44.000",
+        "speaker": "AGENT",
+        "text": "ได้ครับพี่ กำจัดปลวก อ่างมาบประชันใช่ไหม?",
+        "emotion": "professional",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:04:47.000",
+        "speaker": "Speaker ?",
+        "text": "เออๆ มันติดกับกำจัดปลวกอะ บริษัทกำจัดปลวกอะ อยู่ใต้เขื่อน อ่า ก่อนเข้าอ่างมาบประชัน มันจะอยู่ใต้สะพานทางด่วนน่ะ ไปทางขอบอ่างน่ะ เออ อยู่นี่แหละ ยิมที่อยู่ตรงนี้",
+        "emotion": "neutral",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:05:01.000",
+        "speaker": "AGENT",
+        "text": "สักครู่นะครับ",
+        "emotion": "professional",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:05:13.000",
+        "speaker": "AGENT",
+        "text": "อ๋อ โอเค ได้ครับพี่ เดี๋ยวหนูแจ้งพิกัดไปที่อ่างมาบประชันก่อนดีกว่าเนาะ เพราะว่าน่าจะง่าย แล้วเดี๋ยวให้พี่เซอร์เวย์โทรหาลูกค้าอีกที",
+        "emotion": "professional",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:05:21.000",
+        "speaker": "Speaker ?",
+        "text": "โอเค ได้ครับ",
+        "emotion": "neutral",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:05:22.000",
+        "speaker": "AGENT",
+        "text": "ครับ ขอบคุณครับพี่ สวัสดีครับ",
+        "emotion": "professional",
+        "language": "thai"
+      },
+      {
+        "timestamp": "00:05:25.000",
+        "speaker": "CUSTOMER",
+        "text": "He is coming?",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:05:27.000",
+        "speaker": "AGENT",
+        "text": "It's gonna take time 30 or 40 minutes. You have to wait.",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:05:32.000",
+        "speaker": "CUSTOMER",
+        "text": "Okay, so I have to wait here?",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:05:34.000",
+        "speaker": "AGENT",
+        "text": "Yeah, you have to wait to see our surveyor.",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:05:39.000",
+        "speaker": "CUSTOMER",
+        "text": "Okay, bye-bye.",
+        "emotion": "satisfied",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:05:40.000",
+        "speaker": "AGENT",
+        "text": "I will send someone to assist you right now, ma'am.",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:05:44.000",
+        "speaker": "CUSTOMER",
+        "text": "Yeah, please, as soon as possible.",
+        "emotion": "anxious",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:05:46.000",
+        "speaker": "AGENT",
+        "text": "Sure.",
+        "emotion": "professional",
+        "language": "english"
+      }
+    ]
+  },
+  "usage": {
+    "transcript": [
+      9158,
+      5172,
+      17596
+    ],
+    "qa": [
+      9868,
+      3507,
+      14362
+    ]
+  },
+  "duration": 351,
+  "date": "2026-04-09",
+  "process_time": 74.26062822341919,
+  "call_type": "OUTBOUND",
+  "agent": "jantikan.nua@mrkumka.com",
+  "queue": "Inbound Kumka English",
+  "systemPhoneNumber": "+6620299818"
+}

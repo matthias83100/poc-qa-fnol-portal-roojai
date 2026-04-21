@@ -1,0 +1,420 @@
+{
+  "filename": "connect/uat-roojai/CallRecordings/2026/03/a96d3dd2-4564-474d-86f7-94db3941786f_file3EN_fromprod.wav",
+  "qa_json": {
+    "categories": [
+      {
+        "category_name": "call_procedure",
+        "questions": [
+          {
+            "id": "1",
+            "question": "permission_to_record",
+            "criteria": "Did the agent ask for permission to record the conversation audio?",
+            "answer": "No",
+            "evidence": "Throughout the transcript, there is no mention of recording the conversation.",
+            "explanation": "The agent did not inform the customer or ask for permission to record the audio."
+          },
+          {
+            "id": "2",
+            "question": "vehicle_registration_verified",
+            "criteria": "Did the agent verify the correctness of the registered vehicle's license plate?",
+            "answer": "Yes",
+            "evidence": "00:00:26.500 AGENT: Okay. And may I know about your car plate number please? ... 00:00:31.200 CUSTOMER: Yeah, car plate number 3827.",
+            "explanation": "The agent asked for and received the vehicle's license plate number."
+          },
+          {
+            "id": "15",
+            "question": "ask_about_vehicle_damage",
+            "criteria": "Did the agent inquire about the damage to the insured vehicle (the conversation mentions the damage to the insured vehicle)?",
+            "answer": "No",
+            "evidence": "00:00:57.300 CUSTOMER: But right now car is already all repaired, complete.",
+            "explanation": "The agent did not ask about the damage because the customer stated the car was already repaired."
+          }
+        ]
+      },
+      {
+        "category_name": "information_gathering",
+        "questions": [
+          {
+            "id": "3",
+            "question": "verify_make_model",
+            "criteria": "Did the agent verify the correctness of the reported vehicle's brand/make?",
+            "answer": "No",
+            "evidence": "Throughout the conversation, the agent does not ask for or verify the car's brand.",
+            "explanation": "The agent verified the license plate but did not ask about the make or model of the vehicle."
+          },
+          {
+            "id": "4",
+            "question": "ask_date_time_of_incident",
+            "criteria": "Did the agent ask for the date and time of the incident? (If the incident occurred on the same day as the report, asking only for the time is acceptable, or if the conversation can specify the date and time of the incident.)",
+            "answer": "Yes",
+            "evidence": "00:00:36.400 AGENT: Okay. And you had accident on February 8, right?",
+            "explanation": "The agent verified the date of the incident with the customer."
+          },
+          {
+            "id": "5",
+            "question": "ask_driver_name_contact",
+            "criteria": "Did the agent ask for the driver's name and phone number? (The conversation can specify the driver's name and number.)",
+            "answer": "No",
+            "evidence": "00:00:05.100 CUSTOMER: Hello, my name is Nikita.",
+            "explanation": "The customer volunteered their name at the start, and the agent did not explicitly ask for the driver's name or contact number during the conversation."
+          },
+          {
+            "id": "6",
+            "question": "ask_description_of_incident",
+            "criteria": "Did the agent ask about the nature/characteristics of the incident? (The conversation mentions the nature of the incident.)",
+            "answer": "No",
+            "evidence": "The agent focuses on the deductible issue rather than the nature of the accident itself.",
+            "explanation": "The agent did not ask for a description of how the accident happened."
+          },
+          {
+            "id": "7",
+            "question": "surveyor_assignment",
+            "criteria": "Was the agent able to assign the job to the Surveyor correctly? (Check if the agent asked for the Appointment Place, Surveyor Appointed Date/time, or informed that they will coordinate for the staff to contact back.)",
+            "answer": "No",
+            "evidence": "00:01:40.300 AGENT: Okay. So may I give you phone number of claim handler directly, sir?",
+            "explanation": "The agent did not assign a surveyor; instead, they provided a phone number for the customer to contact the claim handler directly."
+          },
+          {
+            "id": "8",
+            "question": "ask_notifier_name_contact",
+            "criteria": "Did the agent ask for the caller's/notifier's name and number? (The conversation can specify the caller's name and number.)",
+            "answer": "No",
+            "evidence": "00:00:05.100 CUSTOMER: Hello, my name is Nikita.",
+            "explanation": "The customer provided their name without being prompted, and the agent did not ask for a contact number."
+          },
+          {
+            "id": "9",
+            "question": "ask_incident_location",
+            "criteria": "Did the agent ask for the location of the incident?",
+            "answer": "No",
+            "evidence": "The conversation does not include any questions regarding the location of the incident.",
+            "explanation": "The agent did not ask where the incident occurred."
+          },
+          {
+            "id": "10",
+            "question": "agent_introduces_self",
+            "criteria": "Did the agent introduce themselves and the department? (Accident notification center followed by name, or name followed by accident notification center.)",
+            "answer": "Yes",
+            "evidence": "00:00:00.000 AGENT: ศูนย์รับแจ้งอุบัติเหตุ สวัสดีค่ะ ลัคนาวรรณ speaking.",
+            "explanation": "The agent introduced the department (Accident Notification Center) and her name (Lakkanawan)."
+          },
+          {
+            "id": "11",
+            "question": "ask_other_party_registration",
+            "criteria": "Did the agent ask for the other party's license plate? [In case of an incident with another party] (If there is no other party, the answer is None.)",
+            "answer": "No",
+            "evidence": "The agent did not inquire about the other party's information.",
+            "explanation": "No question was asked regarding the other party's license plate."
+          },
+          {
+            "id": "12",
+            "question": "dropped_call_callback",
+            "criteria": "In case of a dropped call, did the agent contact the customer back appropriately? (Answer is None only.)",
+            "answer": "None",
+            "evidence": "The call was not dropped.",
+            "explanation": "There was no dropped call during this interaction."
+          },
+          {
+            "id": "13",
+            "question": "recommend_vdo_survey",
+            "criteria": "Did the agent recommend the customer to do a VDO Survey?",
+            "answer": "No",
+            "evidence": "There is no mention of a VDO survey in the transcript.",
+            "explanation": "The agent did not suggest using the VDO Survey service."
+          },
+          {
+            "id": "14",
+            "question": "customer_complaints",
+            "criteria": "Were there any complaints from the customer? (Answer is None only.)",
+            "answer": "None",
+            "evidence": "The customer was asking about a deductible, but did not file a formal complaint against the service or agent.",
+            "explanation": "No complaints were recorded during the call."
+          }
+        ]
+      },
+      {
+        "category_name": "communication_quality",
+        "questions": [
+          {
+            "id": "16",
+            "question": "ask_car_drivable",
+            "criteria": "Did the agent ask and record if the car is drivable? (Car Is Driveable)",
+            "answer": "No",
+            "evidence": "00:00:57.300 CUSTOMER: But right now car is already all repaired, complete.",
+            "explanation": "The agent did not ask if it was drivable since the customer already confirmed it was fully repaired."
+          },
+          {
+            "id": "17",
+            "question": "ask_about_injuries",
+            "criteria": "Did the agent ask if anyone was injured from the incident?",
+            "answer": "No",
+            "evidence": "The transcript shows no inquiry regarding injuries.",
+            "explanation": "The agent failed to ask if there were any injuries."
+          },
+          {
+            "id": "18",
+            "question": "surveyor_info_recorded",
+            "criteria": "Was the surveying company's information recorded correctly? Was the surveyor's name and contact number recorded? (Answer is None only.)",
+            "answer": "None",
+            "evidence": "No surveyor was assigned during this call.",
+            "explanation": "This information is not applicable to this interaction."
+          },
+          {
+            "id": "19",
+            "question": "appropriate_tone_and_words",
+            "criteria": "Did the agent use an appropriate tone of voice and words? (Describe the characteristics of the agent's tone of voice in detail.)",
+            "answer": "Yes",
+            "evidence": "The agent uses professional language and empathetic phrases like 'it's not your fault, right?'",
+            "explanation": "The agent maintained a professional and helpful tone throughout the call."
+          },
+          {
+            "id": "20",
+            "question": "listen_without_interruption",
+            "criteria": "Did the agent listen to the customer and not interrupt the conversation?",
+            "answer": "Yes",
+            "evidence": "The agent allowed the customer to explain the situation at the repair shop without cutting them off.",
+            "explanation": "The agent was a good listener and did not interrupt the customer."
+          },
+          {
+            "id": "21",
+            "question": "appropriate_interaction",
+            "criteria": "Did the agent have appropriate interaction with the customer during the conversation?",
+            "answer": "Yes",
+            "evidence": "The agent engaged with the customer's specific problem regarding the deductible and provided a solution.",
+            "explanation": "The interaction was relevant and focused on the customer's needs."
+          },
+          {
+            "id": "22",
+            "question": "enthusiasm_and_empathy",
+            "criteria": "Was the agent enthusiastic about helping and empathetic towards the customer?",
+            "answer": "Yes",
+            "evidence": "00:00:44.200 AGENT: ...But for this case, it's not your fault, right?",
+            "explanation": "The agent showed empathy regarding the customer's frustration with being charged a deductible."
+          },
+          {
+            "id": "23",
+            "question": "emotion_control",
+            "criteria": "Did the agent control their emotions appropriately during the conversation?",
+            "answer": "Yes",
+            "evidence": "The agent remained professional even when the customer expressed frustration with the repair shop.",
+            "explanation": "The agent's emotional control was consistent and professional."
+          }
+        ]
+      },
+      {
+        "category_name": "Other",
+        "questions": [
+          {
+            "id": "24",
+            "question": "appropriate_hold",
+            "criteria": "Did the agent put the call on hold appropriately? (If there was no holding, the answer is None.)",
+            "answer": "None",
+            "evidence": "There were no hold periods in the transcript.",
+            "explanation": "The agent did not use the hold function."
+          },
+          {
+            "id": "25",
+            "question": "advice_and_questions",
+            "criteria": "Did the agent provide advice and answer the customer's questions and objections accurately and completely? (Answer is None only.)",
+            "answer": "None",
+            "evidence": "The agent provided a direct contact number for the claim handler to resolve the deductible issue.",
+            "explanation": "The agent provided relevant advice for the customer's situation."
+          },
+          {
+            "id": "26",
+            "question": "impressive_closing",
+            "criteria": "Did the agent end the conversation with an impressive sentence for the customer?",
+            "answer": "No",
+            "evidence": "00:02:36.100 AGENT: You're welcome, sir. Bye bye.",
+            "explanation": "The agent ended with a standard polite closing, but it did not include the specific impressive phrases recommended in the guidelines."
+          },
+          {
+            "id": "27",
+            "question": "call_type",
+            "criteria": "Call Type (If the agent starts the sentence by introducing that they are contacting from Roojai, it is Outbound. If not, it is Inbound.)",
+            "answer": "Inbound",
+            "evidence": "00:00:00.000 AGENT: ศูนย์รับแจ้งอุบัติเหตุ สวัสดีค่ะ ลัคนาวรรณ speaking.",
+            "explanation": "The agent answered an incoming call to the Accident Notification Center."
+          }
+        ]
+      }
+    ]
+  },
+  "transcript_json": {
+    "transcript": [
+      {
+        "timestamp": "00:00:00.000",
+        "speaker": "AGENT",
+        "text": "ศูนย์รับแจ้งอุบัติเหตุ สวัสดีค่ะ ลัคนาวรรณ speaking. How can I help you?",
+        "emotion": "professional",
+        "language": "en-th"
+      },
+      {
+        "timestamp": "00:00:05.100",
+        "speaker": "CUSTOMER",
+        "text": "Hello, my name is Nikita. Right now I have accident and after that I go to Ford customer's repair shop and he said I must pay 3,000 baht, but it's not my fault in accident.",
+        "emotion": "frustrated",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:26.500",
+        "speaker": "AGENT",
+        "text": "Okay. And may I know about your car plate number please?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:31.200",
+        "speaker": "CUSTOMER",
+        "text": "Yeah, car plate number 3827.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:36.400",
+        "speaker": "AGENT",
+        "text": "Okay. And you had accident on February 8, right?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:43.000",
+        "speaker": "CUSTOMER",
+        "text": "Yeah, yeah.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:44.200",
+        "speaker": "AGENT",
+        "text": "Okay. And right now you already have claim document and you go to the garage and the garage said you need to pay for the policy deductible. But for this case, it's not your fault, right?",
+        "emotion": "empathetic",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:00:57.300",
+        "speaker": "CUSTOMER",
+        "text": "Yeah, right. But right now car is already all repaired, complete.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:06.100",
+        "speaker": "AGENT",
+        "text": "Okay. But because for this phone number is for report accident center. But if you would like to talk about your policy deductible or that why you need to pay, I need to tell the claim handler staff call back to you.",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:22.000",
+        "speaker": "CUSTOMER",
+        "text": "Okay, but why I call you? Your colleague call me early and say it's not your fault, you don't need to pay. But right now in repair shop say I need to pay.",
+        "emotion": "confused",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:40.300",
+        "speaker": "AGENT",
+        "text": "Okay. So may I give you phone number of claim handler directly, sir?",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:44.100",
+        "speaker": "CUSTOMER",
+        "text": "Okay, yeah.",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:47.200",
+        "speaker": "AGENT",
+        "text": "Okay. The claim handler staff number is 02-",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:51.400",
+        "speaker": "CUSTOMER",
+        "text": "02",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:53.100",
+        "speaker": "AGENT",
+        "text": "080",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:01:54.200",
+        "speaker": "CUSTOMER",
+        "text": "Just a moment. One second. 02-080",
+        "emotion": "calm",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:02:08.300",
+        "speaker": "AGENT",
+        "text": "Yes, 6080.",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:02:12.100",
+        "speaker": "CUSTOMER",
+        "text": "6080. And talk on English language, yeah?",
+        "emotion": "neutral",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:02:21.000",
+        "speaker": "AGENT",
+        "text": "Yes, it will have IVR sound you need to listen what the number you need to press to English speaking. But we have staff who can speak English.",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:02:33.000",
+        "speaker": "CUSTOMER",
+        "text": "Okay, okay. Thank you.",
+        "emotion": "satisfied",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:02:36.100",
+        "speaker": "AGENT",
+        "text": "You're welcome, sir. Bye bye.",
+        "emotion": "professional",
+        "language": "english"
+      },
+      {
+        "timestamp": "00:02:39.200",
+        "speaker": "CUSTOMER",
+        "text": "Bye bye.",
+        "emotion": "neutral",
+        "language": "english"
+      }
+    ]
+  },
+  "usage": {
+    "transcript": [
+      4384,
+      1613,
+      12269
+    ],
+    "qa": [
+      6310,
+      3111,
+      11392
+    ]
+  },
+  "duration": 160,
+  "date": "2026-04-09",
+  "process_time": 59.62441086769104,
+  "call_type": "OUTBOUND",
+  "agent": "jantikan.nua@mrkumka.com",
+  "queue": "Inbound Kumka English",
+  "systemPhoneNumber": "+6620299818"
+}

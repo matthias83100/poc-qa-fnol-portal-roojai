@@ -1,0 +1,548 @@
+{
+  "filename": "connect/uat-roojai/CallRecordings/2026/03/f9afce8c-4298-451c-ae26-965f4d3d130b_file3TH_fromprod.wav",
+  "qa_json": {
+    "categories": [
+      {
+        "category_name": "call_procedure",
+        "questions": [
+          {
+            "id": "1",
+            "question": "permission_to_record",
+            "criteria": "เจ้าหน้าขออนุญาต บันทึกไฟล์เสียงสนทนาหรือไม่?",
+            "answer": "No",
+            "evidence": "Throughout the conversation, there is no mention of recording permission.",
+            "explanation": "ไม่พบการแจ้งหรือขออนุญาตบันทึกเสียงสนทนาในบทสนทนา"
+          },
+          {
+            "id": "2",
+            "question": "vehicle_registration_verified",
+            "criteria": "เจ้าหน้าที่มีการตรวจสอบความถูกต้องทะเบียนรถที่แจ้งเหตุ ?",
+            "answer": "Yes",
+            "evidence": "00:00:06.000 AGENT: ขอทราบเป็นทะเบียนรถครับ ... 00:00:08.000 CUSTOMER: คระฆัง ฉฉิ่ง 7088 ... 00:00:12.000 AGENT: คระฆัง ฉฉิ่ง สักครู่นะครับ 7088",
+            "explanation": "เจ้าหน้าที่สอบถามทะเบียนรถและมีการทวนข้อมูลเพื่อความถูกต้อง"
+          },
+          {
+            "id": "15",
+            "question": "ask_about_vehicle_damage",
+            "criteria": "เจ้าหน้าที่มีการสอบถามถึงความเสียหายของรถเอาประกัน (ในบทสนทนามีการพูดถึงความเสียหายของรถเอาประกัน)",
+            "answer": "Yes",
+            "evidence": "00:01:34.000 AGENT: ของเราเสียหายตรงด้านไหนครับ ... 00:01:41.000 CUSTOMER: ด้านหน้าขวาครับ",
+            "explanation": "เจ้าหน้าที่สอบถามจุดที่รถได้รับความเสียหาย"
+          }
+        ]
+      },
+      {
+        "category_name": "information_gathering",
+        "questions": [
+          {
+            "id": "3",
+            "question": "verify_make_model",
+            "criteria": "เจ้าหน้าที่มีการตรวจสอบความถูกต้องยี่ห้อรถที่แจ้งเหตุ ?",
+            "answer": "Yes",
+            "evidence": "00:00:12.000 AGENT: ... เป็นรถยี่ห้ออะไรครับ ... 00:00:26.000 CUSTOMER: Nissan Almera ครับ",
+            "explanation": "เจ้าหน้าที่สอบถามยี่ห้อรถและลูกค้าแจ้งว่าเป็น Nissan Almera"
+          },
+          {
+            "id": "4",
+            "question": "ask_date_time_of_incident",
+            "criteria": "เจ้าหน้าที่สอบถามวันและเวลาการเกิดเหตุ ? (กรณีเกิดเหตุในวันเดียวกันกับการแจ้งเหตุสอบถามแค่เวลาได้ หรือในบทสนทนาสามารถระบุวันและเวลาเกิดเหตุได้)",
+            "answer": "Yes",
+            "evidence": "00:00:39.000 AGENT: เกิดเหตุเมื่อสักครู่เลยนะคะ ... 00:00:41.000 CUSTOMER: ครับผม",
+            "explanation": "เจ้าหน้าที่ยืนยันวันและเวลาเกิดเหตุว่าเพิ่งเกิดขึ้นเมื่อสักครู่"
+          },
+          {
+            "id": "5",
+            "question": "ask_driver_name_contact",
+            "criteria": "เจ้าหน้าที่สอบถามชื่อผู้ขับขี่ เบอร์ ? (ในบทสนทนาสามารถระบุชื่อผู้ขับขี่ เบอร์ได้)",
+            "answer": "Yes",
+            "evidence": "00:00:45.000 AGENT: ผู้ขับขี่รถเราชื่อคุณอะไรครับ ... 00:00:48.000 CUSTOMER: สุชินครับ ... 00:00:52.000 AGENT: คุณสุชิน วงศ์เจริญ นะครับ เรียนสายแล้วก็เบอร์โทรเบอร์นี้นะ",
+            "explanation": "เจ้าหน้าที่สอบถามชื่อผู้ขับขี่และยืนยันเบอร์โทรศัพท์ที่ติดต่อ"
+          },
+          {
+            "id": "6",
+            "question": "ask_incident_description",
+            "criteria": "เจ้าหน้าที่สอบถามลักษณะการเกิดเหตุ  ?",
+            "answer": "Yes",
+            "evidence": "00:01:12.000 AGENT: ... แล้วก็ลักษณะที่ชน ชนยังไงครับผม ... 00:01:23.000 CUSTOMER: ก็คือเลี้ยวเข้าซอย แล้วเหมือนตัดกันน่ะครับ",
+            "explanation": "เจ้าหน้าที่สอบถามและลูกค้าระบุลักษณะการเกิดเหตุ"
+          },
+          {
+            "id": "7",
+            "question": "surveyor_appointment_details_inquired",
+            "criteria": "เจ้าหน้าสามารถแจ้งงานให้กับเจ้าหน้าที่ Surveyor ได้ถูกต้องหรือไม่?",
+            "answer": "Yes",
+            "evidence": "00:02:22.000 AGENT: ... เดี๋ยวขออนุญาตส่งให้เจ้าหน้าที่โทรหาอีกทีหนึ่งนะครับ",
+            "explanation": "เจ้าหน้าที่แจ้งว่าจะประสานงานให้เจ้าหน้าที่โทรหาลูกค้าอีกครั้ง"
+          },
+          {
+            "id": "8",
+            "question": "ask_notifier_name_contact",
+            "criteria": "เจ้าหน้าที่สอบถามชื่อผู้แจ้งเหตุ เบอร์ ?",
+            "answer": "Yes",
+            "evidence": "00:00:33.000 AGENT: ของลูกค้าเป็น Almera นามสกุลคุณอะไรครับ ... 00:00:37.000 CUSTOMER: สุชิน วงศ์เจริญ ครับ ... 00:00:52.000 AGENT: ... เบอร์โทรเบอร์นี้นะ",
+            "explanation": "เจ้าหน้าที่สอบถามชื่อผู้แจ้งและยืนยันเบอร์โทรศัพท์"
+          },
+          {
+            "id": "9",
+            "question": "ask_incident_location",
+            "criteria": "เจ้าหน้าที่สอบถามสถานที่เกิดเหตุ ?",
+            "answer": "Yes",
+            "evidence": "00:01:03.000 AGENT: แล้วก็เกิดเหตุอยู่ที่จังหวัดไหนครับ ... 00:01:10.000 CUSTOMER: ตำบลคลองสอง อำเภอคลองหลวง ... 00:02:18.000 CUSTOMER: เป็นสะพานไอยรา 6 ครับ",
+            "explanation": "เจ้าหน้าที่สอบถามสถานที่เกิดเหตุครบถ้วนทั้งจังหวัด อำเภอ ตำบล และจุดใกล้เคียง"
+          },
+          {
+            "id": "10",
+            "question": "agent_introduces_self",
+            "criteria": "เจ้าหน้าที่แนะนำตัวเองและแนะนำหน่วยงาน (ศูนย์รับแจ้งอุบัติเหตุ ตามด้วยชื่อ หรือแนะนำชื่อแล้วตามด้วยศูนย์รับแจ้งอุบัติเหตุ)",
+            "answer": "Yes",
+            "evidence": "00:00:00.000 AGENT: สวัสดีครับ สมรัตน์แจ้งเหตุ ดาชินะ รับสายยินดีให้บริการครับ",
+            "explanation": "เจ้าหน้าที่แนะนำหน่วยงาน 'สมรัตน์แจ้งเหตุ' และชื่อ 'ดาชินะ'"
+          },
+          {
+            "id": "11",
+            "question": "ask_other_party_registration",
+            "criteria": "เจ้าหน้าที่สอบถามถึงทะเบียนรถคู่กรณี [กรณีแจ้งเหตุแบบมีคู่กรณี] (ถ้าไม่มีคู่กรณีให้ answer เป็น None)",
+            "answer": "Yes",
+            "evidence": "00:01:46.000 AGENT: คู่กรณีเป็นทะเบียนอะไรครับ ... 00:01:50.000 CUSTOMER: 4 ขไข่ กไก่ 8191",
+            "explanation": "เจ้าหน้าที่สอบถามทะเบียนรถคู่กรณีและลูกค้าระบุข้อมูลได้"
+          },
+          {
+            "id": "12",
+            "question": "missed_call_callback",
+            "criteria": "กรณีสายหลุดเจ้าหน้าที่มีการติดต่อกลับลูกค้าอย่างเหมาะสมหรือไม่? (answer เป็น None เท่านั้น)",
+            "answer": "None",
+            "evidence": "",
+            "explanation": "ไม่เกิดเหตุการณ์สายหลุดในบทสนทนา"
+          },
+          {
+            "id": "13",
+            "question": "recommend_vdo_survey",
+            "criteria": "เจ้าหน้าที่มีการแนะนำให้ลูกค้าทำ VDO Survey หรือไม่",
+            "answer": "No",
+            "evidence": "No mention of VDO Survey in the transcript.",
+            "explanation": "เจ้าหน้าที่ไม่ได้แนะนำการทำ VDO Survey"
+          },
+          {
+            "id": "14",
+            "question": "customer_complaint",
+            "criteria": "มีเรื่องร้องเรียนจากลูกค้าหรือไม่? (answer เป็น None เท่านั้น)",
+            "answer": "None",
+            "evidence": "",
+            "explanation": "ไม่มีการร้องเรียน"
+          }
+        ]
+      },
+      {
+        "category_name": "communication_quality",
+        "questions": [
+          {
+            "id": "16",
+            "question": "ask_car_driveable",
+            "criteria": "เจ้าสอบถามและบันทึกข้อมูลรถขับเคลื่อนได้หรือไม่ ( Car Is Driveable )",
+            "answer": "Yes",
+            "evidence": "00:00:42.000 AGENT: ขับเคลื่อนได้ปกติ ไม่มีคนเจ็บนะ",
+            "explanation": "เจ้าหน้าที่สอบถามเรื่องการขับเคลื่อนของรถ"
+          },
+          {
+            "id": "17",
+            "question": "ask_about_injuries",
+            "criteria": "เจ้าหน้าที่สอบถามว่ามีคนบาดเจ็บหรือไม่ จากการเกิดเหตุในครั้งนั้น",
+            "answer": "Yes",
+            "evidence": "00:00:42.000 AGENT: ... ไม่มีคนเจ็บนะ",
+            "explanation": "เจ้าหน้าที่สอบถามว่ามีผู้บาดเจ็บหรือไม่"
+          },
+          {
+            "id": "18",
+            "question": "surveyor_info_recorded",
+            "criteria": "บันทึกข้อมูลบริษัทสำรวจภัยถูกต้องหรือไม่ บันทึกข้อมูลชื่อเจ้าหน้าที่สำรวจภัย พร้อมเบอร์ติดต่อ ? (answer เป็น None เท่านั้น)",
+            "answer": "None",
+            "evidence": "",
+            "explanation": "ไม่ได้ระบุในบทสนทนา"
+          },
+          {
+            "id": "19",
+            "question": "agent_tone_and_language",
+            "criteria": "เจ้าหน้าที่ใช้น้ำเสียงและคำพูดที่เหมาะสมหรือไม่?",
+            "answer": "Yes",
+            "evidence": "The agent uses polite particles 'ครับ' consistently and speaks with a professional tone.",
+            "explanation": "เจ้าหน้าที่ใช้น้ำเสียงสุภาพและเป็นมืออาชีพ"
+          },
+          {
+            "id": "20",
+            "question": "agent_listens_without_interruption",
+            "criteria": "เจ้าหน้าที่รับฟังลูกค้าและไม่พูดขัดจังหวะการสนทนา",
+            "answer": "Yes",
+            "evidence": "The agent waits for the customer to provide information before responding.",
+            "explanation": "เจ้าหน้าที่รับฟังและไม่พบการพูดขัดจังหวะ"
+          },
+          {
+            "id": "21",
+            "question": "agent_appropriate_interaction",
+            "criteria": "เจ้าหน้าที่มีปฏิสัมพันธ์ระหว่างการสนทนาอย่างเหมาะสมกับลูกค้า",
+            "answer": "Yes",
+            "evidence": "Agent acknowledges customer's responses with 'รับทราบครับ' and 'สักครู่นะครับ'.",
+            "explanation": "เจ้าหน้าที่มีปฏิสัมพันธ์อย่างเหมาะสม"
+          },
+          {
+            "id": "22",
+            "question": "agent_eager_to_help_empathetic",
+            "criteria": "เจ้าหน้าที่กระตือรือร้นในการช่วยเหลือและมีความเห็นอกเห็นใจลุกค้า",
+            "answer": "Yes",
+            "evidence": "Agent actively seeks location details to send help: 'รบกวนดูให้หน่อยนึงได้ไหม พอดีเดี๋ยวจะให้เจ้าหน้าที่เข้าไป'.",
+            "explanation": "เจ้าหน้าที่กระตือรือร้นในการช่วยหาข้อมูลเพื่อส่งเจ้าหน้าที่ไปช่วยเหลือ"
+          },
+          {
+            "id": "23",
+            "question": "agent_emotion_control",
+            "criteria": "เจ้าหน้าที่ควบคุมอารมณ์ในระหว่างการสนทนาอย่างเหมาะสม",
+            "answer": "Yes",
+            "evidence": "Tone remains steady and professional even when asking for more location details.",
+            "explanation": "เจ้าหน้าที่ควบคุมอารมณ์ได้ดี"
+          }
+        ]
+      },
+      {
+        "category_name": "Other",
+        "questions": [
+          {
+            "id": "24",
+            "question": "agent_appropriate_hold",
+            "criteria": "เจ้าหน้าที่พักสายอย่างเหมาะสม? (ถ้าไม่มีการพักสายให้ answer เป็น None)",
+            "answer": "None",
+            "evidence": "",
+            "explanation": "ไม่มีการขอพักสาย"
+          },
+          {
+            "id": "25",
+            "question": "agent_addressing_customer_by_name",
+            "criteria": "เจ้าหน้าที่เรียกชื่อลูกค้าระหว่างการสนทนาอย่างเหมาะสม (ถ้ามีการเรียกลูกค้าว่า คุณพี่/พี่ลูกค้า ให้ answer เป็น No ทันที)",
+            "answer": "Yes",
+            "evidence": "00:00:52.000 AGENT: คุณสุชิน วงศ์เจริญ นะครับ",
+            "explanation": "เจ้าหน้าที่เรียกชื่อลูกค้าอย่างเหมาะสม"
+          },
+          {
+            "id": "26",
+            "question": "accurate_complete_advice",
+            "criteria": "เจ้าหน้าที่ให้คำแนะนำและการตอบข้อสงสัยและข้อโต้แย้งของลูกค้าอย่างถูกต้องและครบถ้วน? (answer เป็น None เท่านั้น)",
+            "answer": "None",
+            "evidence": "",
+            "explanation": "เป็นเกณฑ์บังคับให้ตอบ None"
+          },
+          {
+            "id": "27",
+            "question": "agent_impressive_closing",
+            "criteria": "เจ้าหน้าที่จบการสนทนา ด้วยประโยคที่สร้างความประทับใจให้กับลูกค้า?",
+            "answer": "Yes",
+            "evidence": "00:02:22.000 AGENT: ... ขอบคุณที่ใช้บริการครับ ดูแลสุขภาพด้วยนะครับ สวัสดีครับ",
+            "explanation": "เจ้าหน้าที่จบการสนทนาด้วยประโยคที่สุภาพและมีความห่วงใย"
+          },
+          {
+            "id": "28",
+            "question": "call_type",
+            "criteria": "Call Type (เจ้าหน้าที่เริ่มต้นประโยคด้วยการแนะนำว่าติดต่อจากรู้ใจให้เป็น Outbound ถ้าไม่มีให้เป็น Inbound)",
+            "answer": "Inbound",
+            "evidence": "00:00:00.000 AGENT: สวัสดีครับ สมรัตน์แจ้งเหตุ ดาชินะ รับสายยินดีให้บริการครับ",
+            "explanation": "เป็นการรับสายจากลูกค้า"
+          },
+          {
+            "id": "29",
+            "question": "dry_claim",
+            "criteria": "Dry Claim (ไม่ได้เกิดเหตุ ณ วันที่แจ้งเหตุ)",
+            "answer": "No",
+            "evidence": "00:00:39.000 AGENT: เกิดเหตุเมื่อสักครู่เลยนะคะ",
+            "explanation": "เหตุเกิดในขณะที่แจ้ง"
+          },
+          {
+            "id": "30",
+            "question": "windscreen_claim",
+            "criteria": "Windscreen Claim (เป็นเคลมกระจก)",
+            "answer": "No",
+            "evidence": "00:01:41.000 CUSTOMER: ด้านหน้าขวาครับ",
+            "explanation": "เป็นความเสียหายตัวถัง ไม่ใช่กระจก"
+          },
+          {
+            "id": "31",
+            "question": "not_at_fault",
+            "criteria": "Not at fault (กรณีมีคู่กรณีและลูกค้าแจ้งว่าไม่ใช่ฝ่ายผิด)",
+            "answer": "No",
+            "evidence": "00:01:23.000 CUSTOMER: อีกคันจะไปตรง ผมจะเลี้ยวเข้าซอย มันตัดกัน",
+            "explanation": "ลูกค้าไม่ได้แจ้งชัดเจนว่าตนเองเป็นฝ่ายถูก และลักษณะเหตุ (เลี้ยวตัดรถทางตรง) มักเป็นฝ่ายผิด"
+          }
+        ]
+      }
+    ]
+  },
+  "transcript_json": [
+    {
+      "timestamp": "00:00:00.000",
+      "speaker": "AGENT",
+      "text": "สวัสดีครับ สมรัตน์แจ้งเหตุ ดาชินะ รับสายยินดีให้บริการครับ",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:04.000",
+      "speaker": "CUSTOMER",
+      "text": "ครับ แจ้งเหตุรถชนครับ",
+      "emotion": "neutral",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:06.000",
+      "speaker": "AGENT",
+      "text": "ขอทราบเป็นทะเบียนรถครับ",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:08.000",
+      "speaker": "CUSTOMER",
+      "text": "คระฆัง ฉฉิ่ง 7088",
+      "emotion": "neutral",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:12.000",
+      "speaker": "AGENT",
+      "text": "คระฆัง ฉฉิ่ง สักครู่นะครับ 7088 เป็นรถยี่ห้ออะไรครับ",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:26.000",
+      "speaker": "CUSTOMER",
+      "text": "Nissan Almera ครับ",
+      "emotion": "neutral",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:27.000",
+      "speaker": "AGENT",
+      "text": "แจ้งเหตุชนอะไรครับวันนี้",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:29.000",
+      "speaker": "CUSTOMER",
+      "text": "ชนกับรถเก๋งอีกคันนึงครับ",
+      "emotion": "neutral",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:33.000",
+      "speaker": "AGENT",
+      "text": "ของลูกค้าเป็น Almera นามสกุลคุณอะไรครับ",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:37.000",
+      "speaker": "CUSTOMER",
+      "text": "สุชิน วงศ์เจริญ ครับ",
+      "emotion": "neutral",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:39.000",
+      "speaker": "AGENT",
+      "text": "เกิดเหตุเมื่อสักครู่เลยนะคะ",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:41.000",
+      "speaker": "CUSTOMER",
+      "text": "ครับผม",
+      "emotion": "neutral",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:42.000",
+      "speaker": "AGENT",
+      "text": "ขับเคลื่อนได้ปกติ ไม่มีคนเจ็บนะ",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:44.000",
+      "speaker": "CUSTOMER",
+      "text": "ครับ",
+      "emotion": "neutral",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:45.000",
+      "speaker": "AGENT",
+      "text": "ผู้ขับขี่รถเราชื่อคุณอะไรครับ",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:48.000",
+      "speaker": "CUSTOMER",
+      "text": "สุชินครับ",
+      "emotion": "neutral",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:52.000",
+      "speaker": "AGENT",
+      "text": "คุณสุชิน วงศ์เจริญ นะครับ เรียนสายแล้วก็เบอร์โทรเบอร์นี้นะ",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:00:56.000",
+      "speaker": "CUSTOMER",
+      "text": "ใช่ครับ",
+      "emotion": "neutral",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:01:03.000",
+      "speaker": "AGENT",
+      "text": "แล้วก็เกิดเหตุอยู่ที่จังหวัดไหนครับ",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:01:06.000",
+      "speaker": "CUSTOMER",
+      "text": "ปทุมธานีครับ",
+      "emotion": "neutral",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:01:08.000",
+      "speaker": "AGENT",
+      "text": "อำเภอ ตำบล อะไรครับ",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:01:10.000",
+      "speaker": "CUSTOMER",
+      "text": "ตำบลคลองสอง อำเภอคลองหลวง",
+      "emotion": "neutral",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:01:12.000",
+      "speaker": "AGENT",
+      "text": "คลองสอง คลองหลวง แล้วก็ลักษณะที่ชน ชนยังไงครับผม",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:01:23.000",
+      "speaker": "CUSTOMER",
+      "text": "ก็คือเลี้ยวเข้าซอย แล้วเหมือนตัดกันน่ะครับ อีกคันจะไปตรง ผมจะเลี้ยวเข้าซอย มันตัดกัน",
+      "emotion": "neutral",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:01:34.000",
+      "speaker": "AGENT",
+      "text": "ของเราเสียหายตรงด้านไหนครับ",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:01:37.000",
+      "speaker": "CUSTOMER",
+      "text": "อะไรนะครับ",
+      "emotion": "confused",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:01:39.000",
+      "speaker": "AGENT",
+      "text": "ของเราเสียหายตรงด้านไหนครับ",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:01:41.000",
+      "speaker": "CUSTOMER",
+      "text": "ด้านหน้าขวาครับ",
+      "emotion": "neutral",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:01:46.000",
+      "speaker": "AGENT",
+      "text": "คู่กรณีเป็นทะเบียนอะไรครับ",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:01:50.000",
+      "speaker": "CUSTOMER",
+      "text": "4 ขไข่ กไก่ 8191",
+      "emotion": "neutral",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:01:54.000",
+      "speaker": "AGENT",
+      "text": "4 ขไข่ กไก่ 8191 กรุงเทพนะ ตรงนั้นมีซอย ถนน หรืออะไรไหมครับ",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:02:04.000",
+      "speaker": "CUSTOMER",
+      "text": "ไม่มีป้ายชื่อซอยครับ",
+      "emotion": "neutral",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:02:06.000",
+      "speaker": "AGENT",
+      "text": "รบกวนดูให้หน่อยนึงได้ไหม พอดีเดี๋ยวจะให้เจ้าหน้าที่เข้าไป มีใกล้กับอะไรไหมครับ",
+      "emotion": "professional",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:02:18.000",
+      "speaker": "CUSTOMER",
+      "text": "เป็นสะพานไอยรา 6 ครับ",
+      "emotion": "neutral",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:02:22.000",
+      "speaker": "AGENT",
+      "text": "สะพานไอยรา 6 รับทราบครับ เดี๋ยวขออนุญาตส่งให้เจ้าหน้าที่โทรหาอีกทีหนึ่งนะครับ ขอบคุณที่ใช้บริการครับ ดูแลสุขภาพด้วยนะครับ สวัสดีครับ",
+      "emotion": "satisfied",
+      "language": "thai"
+    },
+    {
+      "timestamp": "00:02:37.000",
+      "speaker": "CUSTOMER",
+      "text": "ครับ",
+      "emotion": "neutral",
+      "language": "thai"
+    }
+  ],
+  "usage": {
+    "transcript": [
+      4437,
+      2412,
+      8221
+    ],
+    "qa": [
+      7885,
+      3822,
+      13486
+    ]
+  },
+  "duration": 163,
+  "date": "2026-04-09",
+  "process_time": 45.64107799530029,
+  "call_type": "INBOUND",
+  "agent": "pattara.sri@roojai.com",
+  "queue": "Inbound General Enquiry TH - RJI",
+  "systemPhoneNumber": "+6620299818"
+}
